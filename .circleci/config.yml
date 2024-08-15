@@ -1,3 +1,4 @@
+
 version: 2.1
 jobs:
   build:
@@ -16,8 +17,9 @@ jobs:
           command: pip install -r requirements.txt
       - run:
           name: Run tests
-          command: coverage run -m unittest && coverage xml && coverage report -m
+          command: coverage run -m unittest && coverage report
       - run:
           name: Upload CodeClimate coverage report
           command: |
             ./cc-test-reporter after-build
+
