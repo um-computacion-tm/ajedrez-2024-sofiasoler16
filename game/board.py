@@ -1,4 +1,4 @@
-from game.piece import Rook, Pawn
+from game.piece import Rook, Pawn, Knight, Bishop, Queen, King
 
 class Board:
     def __init__(self): #Asi inicia el tablero
@@ -9,18 +9,22 @@ class Board:
                 col.append(None)
             self.__positions__.append(col)
 
+        #lugares rook
         self.__positions__[0][0] = Rook("BLACK") #"Rook Black"
         self.__positions__[0][7] = Rook("BLACK") #"Rook Black"
         self.__positions__[7][7] = Rook("WHITE") #"Rook White"
         self.__positions__[7][0] = Rook("WHITE") #"Rook White"
 
+        #lugares pawn
         self.__positions__[1][0] = Pawn("BLACK") #"PawnBlack"
+        self.__positions__[1][1] = Pawn("BLACK") #"PawnBlack"
         self.__positions__[1][2] = Pawn("BLACK") #"PawnBlack"
         self.__positions__[1][3] = Pawn("BLACK") #"PawnBlack"
         self.__positions__[1][4] = Pawn("BLACK") #"PawnBlack"
         self.__positions__[1][5] = Pawn("BLACK") #"PawnBlack"
         self.__positions__[1][6] = Pawn("BLACK") #"PawnBlack"
         self.__positions__[1][7] = Pawn("BLACK") #"PawnBlack"
+        self.__positions__[6][0] = Pawn("WHITE") #"PawnWhite"
         self.__positions__[6][1] = Pawn("WHITE") #"PawnWhite"
         self.__positions__[6][2] = Pawn("WHITE") #"PawnWhite"
         self.__positions__[6][3] = Pawn("WHITE") #"PawnWhite"
@@ -28,12 +32,33 @@ class Board:
         self.__positions__[6][5] = Pawn("WHITE") #"PawnWhite"
         self.__positions__[6][6] = Pawn("WHITE") #"PawnWhite"
         self.__positions__[6][7] = Pawn("WHITE") #"PawnWhite"
+
+        #lugares knight
+        self.__positions__[0][1] = Knight("BLACK") #"KnightBlack"
+        self.__positions__[0][6] = Knight("BLACK") #"KnightBlack"
+        self.__positions__[7][1] = Knight("WHITE") #"KnightWhite"
+        self.__positions__[7][6] = Knight("WHITE") #"KnightWhite"
+
+        #lugares bushop
+        self.__positions__[0][2] = Bishop("BLACK") #"BishopBlack"
+        self.__positions__[0][5] = Bishop("BLACK") #"BishopBlack"
+        self.__positions__[7][2] = Bishop("WHITE") #"BishopWhite"
+        self.__positions__[7][5] = Bishop("WHITE") #"BishopWhite"
+
+        #lugares queen
+        self.__positions__[0][3] = Queen("BLACK") #"QueenBlack"
+        self.__positions__[7][3] = Queen("WHITE") #"QueenWhite"
+
+
+        #lugares king
+        self.__positions__[0][4] = King("BLACK") #"KingBlack"
+        self.__positions__[7][4] = King("WHITE") #"KingWhite"
     
     def get_piece(self, row, col):
         piece = self.__positions__[row][col]
         if piece is None:
             return "No piece"
-        return ("La pieza de esa posicion es: ", {piece.__type__}, {piece.__color__})
+        return ({piece.__type__}, {piece.__color__})
     
     def move_piece(self, from_row, from_col, to_row, to_col):
         piece = self.__positions__[from_row][from_col]
@@ -47,7 +72,30 @@ class Board:
         self.__positions__[from_row][from_col] = None
 
         print(f"Moved piece from: ", {from_row}, {from_col}, "to: ", {to_row}, {to_col})
+
+        self.show_board()
+        
     
+    def show_board(self):
+
+        print("    ", end="")
+        for col in range(8):
+            print(f"    {col} ", end="")
+        print() 
+
+        for row in range(8):
+            print(f" {row} |", end="")  
+
+            for col in range(8):
+                piece = self.__positions__[row][col]
+                if piece is None:
+                    print("    ", end=" |")  # Espacio en blanco si no hay pieza
+                else:
+                    print(f" {piece.__type__[0]}{piece.__color__[0]} ", end=" |")  # Muestra inicial del tipo y color de la pieza
+            print()
+            print("    " + "------" * 8 + "")  # Línea separadora entre filas
+
 # board = Board()
+# board.show_board()
 # print(board.get_piece(0,0))
 # print(board.get_piece(7,0))

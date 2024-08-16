@@ -13,6 +13,7 @@ class Chess:
             print("No puede mover pieza que no esta")
             return
 
+        
 
         self.__board__.move_piece(from_row, from_col, to_row, to_col)
         self.change_turn()

@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Primer Sprint----------------
+## [0.1] - 16-8-24
+Added classes pieces knight, bishop, queen and king. Added function show_board and the possibility to end game in any moment
+
 ## [0.12] - 15-8-24
 Added funcion move to chess, move_piece method to board, and fixed get_piece method
 

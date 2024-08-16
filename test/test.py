@@ -1,8 +1,10 @@
 import unittest
 
-from game.piece import Rook, Pawn
+from game.piece import Rook, Pawn, Knight, Bishop, Queen, King
 from game.board import Board
 from game.chess import Chess
+
+## Porque mi codeClimate me verifica el codigo de los tests?
 
 class TestChess(unittest.TestCase):
     def setUp(self):
@@ -52,7 +54,7 @@ class TestBoard(unittest.TestCase):
         self.board.move_piece(0, 0, 0, 1)
         
 
-        self.assertEqual(self.board.get_piece(0, 1), ('La pieza de esa posicion es: ', {'ROOK'}, {'BLACK'}))
+        self.assertEqual(self.board.get_piece(0, 1), ({'ROOK'}, {'BLACK'}))
 
         self.assertEqual(self.board.get_piece(0, 0), "No piece")
 
@@ -79,27 +81,25 @@ class TestRook(unittest.TestCase):
         self.assertEqual(pawn.__color__, "WHITE")
         self.assertEqual(pawn.__type__, "PAWN")
 
+    def test_knight_init(self):
+        knight = Knight("WHITE")
+        self.assertEqual(knight.__color__, "WHITE")
+        self.assertEqual(knight.__type__, "KNIGHT")
 
-# class TestMain(unittest.TestCase):
-    # @patch('builtins.input', side_effect=[0, 0, 1, 0])
-    # @patch('sys.stdout', new_callable=StringIO)  # Captura la salida estándar (print)
-    # def test_main_valid_move(self, mock_stdout, mock_input):
-    #     main()  # Ejecuta la función main()
+    def test_bishop_init(self):
+        bishop = Bishop("WHITE")
+        self.assertEqual(bishop.__color__, "WHITE")
+        self.assertEqual(bishop.__type__, "BISHOP")
 
-    #     # Verifica la salida capturada
-    #     output = mock_stdout.getvalue()
-    #     self.assertIn("The piece you have choosen is: ROOK (BLACK)", output)
+    def test_queen_init(self):
+        queen = Queen("WHITE")
+        self.assertEqual(queen.__color__, "WHITE")
+        self.assertEqual(queen.__type__, "QUEEN")
 
-    # @patch('builtins.input', side_effect=[3, 3, 4, 4])
-    # @patch('sys.stdout', new_callable=StringIO)  
-    # def test_main_no_piece(self, mock_stdout, mock_input):
-    #     main()  # Ejecuta la función main()
-
-    #     # Verifica la salida capturada
-    #     output = mock_stdout.getvalue()
-    #     self.assertIn("The piece you have choosen is: No piece", output)
-
-
+    def test_king_init(self):
+        king = King("WHITE")
+        self.assertEqual(king.__color__, "WHITE")
+        self.assertEqual(king.__type__, "KING")
 
 
 
