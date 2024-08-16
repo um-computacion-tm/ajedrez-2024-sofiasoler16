@@ -1,4 +1,4 @@
-from game.rook import Rook, Pawn
+from game.piece import Rook, Pawn
 
 class Board:
     def __init__(self): #Asi inicia el tablero
@@ -28,14 +28,25 @@ class Board:
         self.__positions__[6][5] = Pawn("WHITE") #"PawnWhite"
         self.__positions__[6][6] = Pawn("WHITE") #"PawnWhite"
         self.__positions__[6][7] = Pawn("WHITE") #"PawnWhite"
-
-
-        
+    
     def get_piece(self, row, col):
         piece = self.__positions__[row][col]
         if piece is None:
             return "No piece"
-        return f"{piece.__type__} ({piece.__color__})"
+        return ("La pieza de esa posicion es: ", {piece.__type__}, {piece.__color__})
+    
+    def move_piece(self, from_row, from_col, to_row, to_col):
+        piece = self.__positions__[from_row][from_col]
+
+        if piece is None:
+            print("No piece to move")
+            return "No piece to move"
+
+        self.__positions__[to_row][to_col] = piece
+
+        self.__positions__[from_row][from_col] = None
+
+        print(f"Moved piece from: ", {from_row}, {from_col}, "to: ", {to_row}, {to_col})
     
 # board = Board()
 # print(board.get_piece(0,0))
