@@ -60,12 +60,47 @@ class Board:
             return "No piece"
         return ({piece.__type__}, {piece.__color__})
     
+    def permited_move(self, from_row, from_col, to_row, to_col):
+        piece = self.__positions__[from_row][from_col]
+        if piece.__type__ == "ROOK":
+            if to_row == from_row and to_col != from_col:
+                return True
+            elif to_col == from_col and to_row != from_row:
+                return True
+            else:
+                return False
+        
+#         if piece.__type__ == "ROOK":
+
+        if piece.__type__ == "KNIGHT":
+            if from_row == to_row + 2 and from_col == to_col + 1:
+                return True
+            elif from_row == to_row and from_col == to_col + 2:
+                return True
+            elif from_row == to_row + 2 and from_col == to_col - 1:
+                return True
+            elif from_row == to_row - 2 and from_col == to_col + 1:
+                return True
+            elif from_row == to_row and from_col == to_col + 2:
+                return True
+            elif from_row == to_row -2 and from_col == to_col - 1:
+                return True
+            else:
+                return False
+    
+    #Agregar que una pieza no se pueda mover a donde hay una pieza de su mismo color
+    #Agregar que no permita mover una pieza del color que no es el turno
+
     def move_piece(self, from_row, from_col, to_row, to_col):
+        
         piece = self.__positions__[from_row][from_col]
 
         if piece is None:
             print("No piece to move")
             return "No piece to move"
+        elif self.permited_move(from_row, from_col, to_row, to_col) == False:
+            print("The piece cannot be moved in this position")
+            return "The piece cannot be moved in this position"
 
         self.__positions__[to_row][to_col] = piece
 
@@ -74,7 +109,7 @@ class Board:
         print(f"Moved piece from: ", {from_row}, {from_col}, "to: ", {to_row}, {to_col})
 
         self.show_board()
-        
+
     
     def show_board(self):
 

@@ -1,5 +1,6 @@
 from game.chess import Chess
 from game.board import Board
+from game.piece import Piece
 
 def main():
     chess = Chess() 
@@ -7,9 +8,13 @@ def main():
     a = "y"
     try:
         while a == "y":
+            
+            
             from_row = int(input("From row: "))
             from_col = int(input("From col: "))
             print("The piece you have choosen is: ",chess.__board__.get_piece(from_row, from_col))
+
+
             to_row = int(input("To row: "))
             to_col = int(input("To col: "))
 
@@ -20,6 +25,8 @@ def main():
             
             a = input("Do you want to continue? (y/n): ")
             
+            chess.change_turn()
+            print("Es turno de: ", chess.__turn__)
 
     except Exception as e:
         print("error")

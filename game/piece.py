@@ -10,6 +10,10 @@ class Rook(Piece):
         super().__init__(color)
         self.__type__ = "ROOK" 
 
+    # def permited_move_rook(self, row, col):
+    #     board.__positions__[row][col]
+
+
 class Pawn(Piece):
     def __init__(self, color):
         super().__init__(color)
@@ -19,6 +23,7 @@ class Knight(Piece):
     def __init__(self, color):
         super().__init__(color)
         self.__type__ = "KNIGHT"
+
 
 class Bishop(Piece):
     def __init__(self, color):

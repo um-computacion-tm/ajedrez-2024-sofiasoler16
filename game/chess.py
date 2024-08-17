@@ -10,13 +10,12 @@ class Chess:
         piece = self.__board__.get_piece(from_row, from_col)
 
         if piece == "No piece":
-            print("No puede mover pieza que no esta")
-            return
+            print("You can't move a piece that doesn't exist")
+            return "You can't move a piece that doesn't exist"
 
-        
-
+    
         self.__board__.move_piece(from_row, from_col, to_row, to_col)
-        self.change_turn()
+        
 
 
     def change_turn(self):
