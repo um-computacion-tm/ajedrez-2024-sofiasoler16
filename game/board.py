@@ -62,6 +62,8 @@ class Board:
     
     def permited_move(self, from_row, from_col, to_row, to_col):
         piece = self.__positions__[from_row][from_col]
+
+        # movimiento de ROOK
         if piece.__type__ == "ROOK":
             if to_row == from_row and to_col != from_col:
                 return True
@@ -69,9 +71,11 @@ class Board:
                 return True
             else:
                 return False
-        
-#         if piece.__type__ == "ROOK":
+        # movimiento de PAWN
 
+#         if piece.__type__ == "PAWN":
+
+        # movimiento de KNIGHT
         if piece.__type__ == "KNIGHT":
             if from_row == to_row + 2 and from_col == to_col + 1:
                 return True
@@ -84,6 +88,54 @@ class Board:
             elif from_row == to_row and from_col == to_col + 2:
                 return True
             elif from_row == to_row -2 and from_col == to_col - 1:
+                return True
+            else:
+                return False
+
+        # movimiento de BISHOP
+        if piece.__type__ == "BISHOP":
+            if from_row == to_row + 1 and from_col == to_col + 1:
+                return True
+            elif from_row == to_row + 1 and from_col == to_col - 1:
+                return True
+            elif from_row == to_row - 1 and from_col == to_col + 1:
+                return True
+            elif from_row == to_row - 1 and from_col == to_col - 1:
+                return True
+            else:
+                return False
+        
+        # movimiento de QUEEN
+        if piece.__type__ == "QUEEN":
+
+            # Donde dice + o - 1 poner un numero posible entre 1 y 8
+            n = []
+            if to_row == from_row and to_col != from_col:
+                return True
+            elif to_col == from_col and to_row != from_row:
+                return True
+            elif abs(to_row - from_row) == abs(to_col - from_col):
+                return True
+            else:
+                return False
+
+        # movimiento de KING
+        if piece.__type__ == "KING":
+            if from_row == to_row - 1 and from_col == to_col:
+                return True
+            elif from_row == to_row + 1 and from_col == to_col:
+                return True
+            elif from_row == to_row and from_col == to_col - 1:
+                return True
+            elif from_row == to_row and from_col == to_col + 1:
+                return True
+            if from_row == to_row + 1 and from_col == to_col + 1:
+                return True
+            elif from_row == to_row + 1 and from_col == to_col - 1:
+                return True
+            elif from_row == to_row - 1 and from_col == to_col + 1:
+                return True
+            elif from_row == to_row - 1 and from_col == to_col - 1:
                 return True
             else:
                 return False

@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Primer Sprint----------------
+## [0.5] - 18-8-24
+Added permited moves to queen, king and bishop
+
 ## [0.14] - 17-8-24
 Added function permited_move to board for Knight and Rook
 
