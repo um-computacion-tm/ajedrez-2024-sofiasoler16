@@ -6,7 +6,10 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Primer Sprint----------------
-## [0.5] - 18-8-24
+## [0.16] - 19-8-24
+Added function move_correct_color to chess, it prohibits the move of a piece that is not your color
+
+## [0.15] - 18-8-24
 Added permited moves to queen, king and bishop
 
 ## [0.14] - 17-8-24

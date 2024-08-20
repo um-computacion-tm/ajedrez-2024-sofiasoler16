@@ -37,7 +37,16 @@ class TestChess(unittest.TestCase):
 
         self.assertEqual(self.chess.move(5,7,2,2), "You can't move a piece that doesn't exist")
 
+    @patch('builtins.print')
+    def test_move_correct_color_white_turn(self, patched_print):
 
+        result = self.chess.move_correct_color(7, 0) 
+        self.assertIsNone(result, "Debería permitir mover la pieza blanca en el turno de blancas")
+
+
+        result = self.chess.move_correct_color(0, 0)
+        self.assertEqual(result, "You can't move a piece that is not your color",
+                         "No debería permitir mover la pieza negra en el turno de blancas")
 
 
 class TestBoard(unittest.TestCase):

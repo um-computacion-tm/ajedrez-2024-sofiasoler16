@@ -1,5 +1,9 @@
 from game.piece import Rook, Pawn, Knight, Bishop, Queen, King
 
+#Preguntar porque mi pipeline funciona sobre develop
+#Que hacer con los permited_move, donde los pongo?
+
+
 class Board:
     def __init__(self): #Asi inicia el tablero
         self.__positions__ = []
@@ -71,6 +75,7 @@ class Board:
                 return True
             else:
                 return False
+        # piece.permited_move_rook(from_row, from_col, to_row, to_col)
         # movimiento de PAWN
 
 #         if piece.__type__ == "PAWN":

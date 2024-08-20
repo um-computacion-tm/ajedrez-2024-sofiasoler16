@@ -10,8 +10,16 @@ class Rook(Piece):
         super().__init__(color)
         self.__type__ = "ROOK" 
 
-    # def permited_move_rook(self, row, col):
-    #     board.__positions__[row][col]
+# No puedo hacer la funcion aca porque me da un error de importacion circular (En board importo piece y en piece importo board)
+    # def permited_move_rook(self, from_row, from_col, to_row, to_col):
+    #     piece = self.board.get_piece(from_row, from_col)
+    #     if piece.__type__ == "ROOK":
+    #         if to_row == from_row and to_col != from_col:
+    #             return True
+    #         elif to_col == from_col and to_row != from_row:
+    #             return True
+    #         else:
+    #             return False
 
 
 class Pawn(Piece):

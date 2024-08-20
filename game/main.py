@@ -8,11 +8,19 @@ def main():
     a = "y"
     try:
         while a == "y":
-            
-            
-            from_row = int(input("From row: "))
-            from_col = int(input("From col: "))
-            print("The piece you have choosen is: ",chess.__board__.get_piece(from_row, from_col))
+            print("Es turno de: ", chess.__turn__)
+            valid_move = False
+            while valid_move == False:
+                from_row = int(input("From row: "))
+                from_col = int(input("From col: "))
+                print("The piece you have chosen is: ", chess.__board__.get_piece(from_row, from_col))
+                
+                # Intentamos mover la pieza si es del color correcto
+                result = chess.move_correct_color(from_row, from_col)
+                if result is None:  # Si no hay error, se seleccionó la pieza correcta
+                    valid_move = True
+                else:
+                    print(result)  # Si hay un error, se vuelve a pedir la pieza
 
 
             to_row = int(input("To row: "))
