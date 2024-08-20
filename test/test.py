@@ -6,6 +6,7 @@ from io import StringIO
 from game.piece import Piece, Rook, Pawn, Knight, Bishop, Queen, King
 from game.board import Board
 from game.chess import Chess
+from game.main import Cli
 
 ## Porque mi codeClimate me verifica el codigo de los tests?
 
@@ -45,9 +46,7 @@ class TestChess(unittest.TestCase):
 
 
         result = self.chess.move_correct_color(0, 0)
-        self.assertEqual(result, "You can't move a piece that is not your color",
-                         "No debería permitir mover la pieza negra en el turno de blancas")
-
+        self.assertEqual(result, "You can't move a piece that is not your color")
 
 class TestBoard(unittest.TestCase):
     def setUp(self):
@@ -95,7 +94,7 @@ class TestBoard(unittest.TestCase):
 
         self.assertEqual(self.board.permited_move(4, 4, 3, 5), False)      
 
-    def test_permited_move_line_77(self): #???????????????????????????????????????????????????????
+    def test_permited_move_line_77(self): 
         self.board.__positions__[2][2] = Knight("BLACK")
         self.assertEqual(self.board.__positions__[2][2].__type__, "KNIGHT")
         
@@ -126,8 +125,9 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(self.board.permited_move(3, 3, 2, 4), True)
         self.assertEqual(self.board.permited_move(3, 3, 2, 2), True)
         self.assertEqual(self.board.permited_move(3, 3, 4, 2), True)
+        self.assertEqual(self.board.permited_move(3, 3, 5, 5), True)
 
-        self.assertEqual(self.board.permited_move(3, 3, 5, 5), False)
+        self.assertEqual(self.board.permited_move(3, 3, 6, 5), False)
 
     def test_permited_move_king(self):
         self.board.__positions__[4][4] = King("BLACK")
@@ -179,11 +179,14 @@ class TestPiece(unittest.TestCase):
         self.assertEqual(king.__color__, "WHITE")
         self.assertEqual(king.__type__, "KING")
 
-# class TestMain(unittest.TestCase):  
-#     @patch('builtins.print')
-#     @patch ('builtins.input', side_effect = ["Y", "Y",7,7,"A","Y",7,8,"B","Y",7,9,"A","N"])
-#     def test_main(self,patched_print, mock_input):
-#         pass
+class TestMain(unittest.TestCase):  
+    @patch('builtins.print')
+    @patch ('builtins.input', side_effect = ["e"])
+    def test_play_error(self,patched_print, mock_input):
+        cli = Cli()
+        cli.play()
+
+        self.assertEqual(cli.play(), "error")
 
 
 

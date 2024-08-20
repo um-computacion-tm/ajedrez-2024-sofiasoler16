@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Primer Sprint----------------
+## [0.17] - 20-8-24
+FIxed complexity metods in board and added tests
+
 ## [0.16] - 19-8-24
 Added function move_correct_color to chess, it prohibits the move of a piece that is not your color
 

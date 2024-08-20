@@ -82,30 +82,33 @@ class Board:
 
         # movimiento de KNIGHT
         if piece.__type__ == "KNIGHT":
-            if from_row == to_row + 2 and from_col == to_col + 1:
-                return True
-            elif from_row == to_row and from_col == to_col + 2:
-                return True
-            elif from_row == to_row + 2 and from_col == to_col - 1:
-                return True
-            elif from_row == to_row - 2 and from_col == to_col + 1:
-                return True
-            elif from_row == to_row and from_col == to_col + 2:
-                return True
-            elif from_row == to_row -2 and from_col == to_col - 1:
+
+            valid_moves = [
+                (2, 1), (2, -1), (-2, 1), (-2, -1),
+                (1, 2), (1, -2), (-1, 2), (-1, -2)]
+            if (from_row - to_row, from_col - to_col) in valid_moves:
                 return True
             else:
                 return False
+            # return (from_row - to_row, from_col - to_col) in valid_moves
+            # if from_row == to_row + 2 and from_col == to_col + 1:
+            #     return True
+            # elif from_row == to_row and from_col == to_col + 2:
+            #     return True
+            # elif from_row == to_row + 2 and from_col == to_col - 1:
+            #     return True
+            # elif from_row == to_row - 2 and from_col == to_col + 1:
+            #     return True
+            # elif from_row == to_row and from_col == to_col + 2:
+            #     return True
+            # elif from_row == to_row -2 and from_col == to_col - 1:
+            #     return True
+            # else:
+            #     return False
 
         # movimiento de BISHOP
         if piece.__type__ == "BISHOP":
-            if from_row == to_row + 1 and from_col == to_col + 1:
-                return True
-            elif from_row == to_row + 1 and from_col == to_col - 1:
-                return True
-            elif from_row == to_row - 1 and from_col == to_col + 1:
-                return True
-            elif from_row == to_row - 1 and from_col == to_col - 1:
+            if abs(to_row - from_row) == abs(to_col - from_col):
                 return True
             else:
                 return False
@@ -113,7 +116,7 @@ class Board:
         # movimiento de QUEEN
         if piece.__type__ == "QUEEN":
 
-            # Donde dice + o - 1 poner un numero posible entre 1 y 8
+            # Donde dice + o - 1 poner un numero posible entre 1 y 8 --> Pusimos abs
             n = []
             if to_row == from_row and to_col != from_col:
                 return True
@@ -126,24 +129,29 @@ class Board:
 
         # movimiento de KING
         if piece.__type__ == "KING":
-            if from_row == to_row - 1 and from_col == to_col:
+
+            if abs(from_row - to_row) <= 1 and abs(from_col - to_col) <= 1 and not (from_row == to_row and from_col == to_col):
                 return True
-            elif from_row == to_row + 1 and from_col == to_col:
-                return True
-            elif from_row == to_row and from_col == to_col - 1:
-                return True
-            elif from_row == to_row and from_col == to_col + 1:
-                return True
-            if from_row == to_row + 1 and from_col == to_col + 1:
-                return True
-            elif from_row == to_row + 1 and from_col == to_col - 1:
-                return True
-            elif from_row == to_row - 1 and from_col == to_col + 1:
-                return True
-            elif from_row == to_row - 1 and from_col == to_col - 1:
-                return True
-            else:
+            else: 
                 return False
+            # if from_row == to_row - 1 and from_col == to_col:
+            #     return True
+            # elif from_row == to_row + 1 and from_col == to_col:
+            #     return True
+            # elif from_row == to_row and from_col == to_col - 1:
+            #     return True
+            # elif from_row == to_row and from_col == to_col + 1:
+            #     return True
+            # elif from_row == to_row + 1 and from_col == to_col + 1:
+            #     return True
+            # elif from_row == to_row + 1 and from_col == to_col - 1:
+            #     return True
+            # elif from_row == to_row - 1 and from_col == to_col + 1:
+            #     return True
+            # elif from_row == to_row - 1 and from_col == to_col - 1:
+            #     return True
+            # else:
+            #     return False
     
     #Agregar que una pieza no se pueda mover a donde hay una pieza de su mismo color
     #Agregar que no permita mover una pieza del color que no es el turno
