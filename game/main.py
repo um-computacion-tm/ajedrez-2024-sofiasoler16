@@ -2,6 +2,9 @@ from game.chess import Chess
 from game.board import Board
 from game.piece import Piece
 
+class InvalidPosition(Exception):
+    pass
+
 class Cli():
     def main(self):
         self.play()
@@ -39,9 +42,9 @@ class Cli():
                 print("La pieza que esta en la nueva posicion es: ", chess.__board__.get_piece(to_row, to_col))
                 
                 a = input("Do you want to continue? (y/n): ")
-                
-                chess.change_turn()
-                print("Es turno de: ", chess.__turn__)
+                if a == "y":
+                    chess.change_turn()
+                    print("Es turno de: ", chess.__turn__)
 
         except Exception as e:
             print("error", e)

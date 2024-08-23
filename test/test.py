@@ -25,7 +25,10 @@ class TestChess(unittest.TestCase):
 
     @patch('builtins.print')
     def test_move_piece(self, patched_print):
-        self.chess.move(7, 0, 6, 0)
+
+        self.assertEqual(self.chess.__board__.get_piece(7, 0), ({'ROOK'}, {'WHITE'}))
+
+        self.chess.move(7, 0, 5, 0)
         
         self.assertEqual(self.chess.__board__.get_piece(7, 0), "No piece")
 
@@ -62,10 +65,10 @@ class TestBoard(unittest.TestCase):
 
     @patch('builtins.print')
     def test_move_piece(self, patched_print):
-        self.board.move_piece(0, 0, 0, 1)
-        
 
-        self.assertEqual(self.board.get_piece(0, 1), ({'ROOK'}, {'BLACK'}))
+        self.assertEqual(self.board.get_piece(0, 0), ({'ROOK'}, {'BLACK'}))
+
+        self.board.move_piece(0, 0, 4, 0)
 
         self.assertEqual(self.board.get_piece(0, 0), "No piece")
 

@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Primer Sprint----------------
+## [0.18] - 22-8-24
+Added exceptions to move_piece method in board and added the error of moving a piece where there is already a piece of the same color
+
 ## [0.17] - 20-8-24
 FIxed complexity metods in board and added tests
 

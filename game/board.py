@@ -1,7 +1,13 @@
 from game.piece import Rook, Pawn, Knight, Bishop, Queen, King
 
-#Preguntar porque mi pipeline funciona sobre develop
+
 #Que hacer con los permited_move, donde los pongo?
+class NotPermitedMove(Exception):
+    pass
+
+class NotPieceToMove(Exception):
+    pass
+
 
 
 class Board:
@@ -76,9 +82,8 @@ class Board:
             else:
                 return False
         # piece.permited_move_rook(from_row, from_col, to_row, to_col)
-        # movimiento de PAWN
 
-#         if piece.__type__ == "PAWN":
+        # movimiento de PAWN
 
         # movimiento de KNIGHT
         if piece.__type__ == "KNIGHT":
@@ -90,21 +95,7 @@ class Board:
                 return True
             else:
                 return False
-            # return (from_row - to_row, from_col - to_col) in valid_moves
-            # if from_row == to_row + 2 and from_col == to_col + 1:
-            #     return True
-            # elif from_row == to_row and from_col == to_col + 2:
-            #     return True
-            # elif from_row == to_row + 2 and from_col == to_col - 1:
-            #     return True
-            # elif from_row == to_row - 2 and from_col == to_col + 1:
-            #     return True
-            # elif from_row == to_row and from_col == to_col + 2:
-            #     return True
-            # elif from_row == to_row -2 and from_col == to_col - 1:
-            #     return True
-            # else:
-            #     return False
+
 
         # movimiento de BISHOP
         if piece.__type__ == "BISHOP":
@@ -134,47 +125,54 @@ class Board:
                 return True
             else: 
                 return False
-            # if from_row == to_row - 1 and from_col == to_col:
-            #     return True
-            # elif from_row == to_row + 1 and from_col == to_col:
-            #     return True
-            # elif from_row == to_row and from_col == to_col - 1:
-            #     return True
-            # elif from_row == to_row and from_col == to_col + 1:
-            #     return True
-            # elif from_row == to_row + 1 and from_col == to_col + 1:
-            #     return True
-            # elif from_row == to_row + 1 and from_col == to_col - 1:
-            #     return True
-            # elif from_row == to_row - 1 and from_col == to_col + 1:
-            #     return True
-            # elif from_row == to_row - 1 and from_col == to_col - 1:
-            #     return True
-            # else:
-            #     return False
+
     
     #Agregar que una pieza no se pueda mover a donde hay una pieza de su mismo color
     #Agregar que no permita mover una pieza del color que no es el turno
 
     def move_piece(self, from_row, from_col, to_row, to_col):
-        
-        piece = self.__positions__[from_row][from_col]
+        try:
+            piece = self.__positions__[from_row][from_col]
 
-        if piece is None:
-            print("No piece to move")
-            return "No piece to move"
-        elif self.permited_move(from_row, from_col, to_row, to_col) == False:
-            print("The piece cannot be moved in this position")
-            return "The piece cannot be moved in this position"
+            if piece is None:
+                raise NotPieceToMove("No piece to move")
+                # print("No piece to move")
+                # return "No piece to move"
 
-        self.__positions__[to_row][to_col] = piece
+            destination = self.__positions__[to_row][to_col]
 
-        self.__positions__[from_row][from_col] = None
+                # Verificamos si la posición de destino tiene una pieza del mismo color
+            if destination is not None and destination.__color__ == piece.__color__:
+                self.show_board()
+                raise NotPermitedMove("Cannot move to a position occupied by a piece of the same color")
 
-        print(f"Moved piece from: ", {from_row}, {from_col}, "to: ", {to_row}, {to_col})
+            if self.permited_move(from_row, from_col, to_row, to_col) == False:
+                self.show_board()
+                raise NotPermitedMove("The piece cannot be moved in this position")
 
-        self.show_board()
+            # elif self.permited_move(from_row, from_col, to_row, to_col) == False:
+            #     print("The piece cannot be moved in this position")
+            #     return "The piece cannot be moved in this position"
 
+            self.__positions__[to_row][to_col] = piece
+
+            self.__positions__[from_row][from_col] = None
+
+            print(f"Moved piece from: ", {from_row}, {from_col}, "to: ", {to_row}, {to_col})
+
+            self.show_board()
+
+    #Hacer que cuando se equivoca en el turno, se le vuelva a pedir repetir el turno
+
+        except NotPieceToMove as e:
+            print("Error:", e)
+            return str(e)
+        except NotPermitedMove as e:
+            print("Error:", e)
+            return str(e)
+        except Exception as e:
+            print("Unexpected error:", e)
+            return "Unexpected error"
     
     def show_board(self):
 
