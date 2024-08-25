@@ -84,6 +84,21 @@ class Board:
         # piece.permited_move_rook(from_row, from_col, to_row, to_col)
 
         # movimiento de PAWN
+        if piece.__type__ == "PAWN":
+            direction = -1 if piece.__color__ == "WHITE" else 1  # Blancas avanzan hacia arriba (-1), negras hacia abajo (+1)
+            if to_col == from_col:  # Movimiento hacia adelante
+                if (to_row - from_row) == direction and self.__positions__[to_row][to_col] is None:
+                    return True
+                # Primera movida del peón (dos pasos adelante)
+                if (from_row == 6 and piece.__color__ == "WHITE") or (from_row == 1 and piece.__color__ == "BLACK"):
+                    if (to_row - from_row) == 2 * direction and self.__positions__[to_row][to_col] is None and self.__positions__[from_row + direction][from_col] is None:
+                        return True
+            # Captura en diagonal
+            if abs(to_col - from_col) == 1 and (to_row - from_row) == direction:
+                destination_piece = self.__positions__[to_row][to_col]
+                if destination_piece is not None and destination_piece.__color__ != piece.__color__:
+                    return True
+            return False
 
         # movimiento de KNIGHT
         if piece.__type__ == "KNIGHT":

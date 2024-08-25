@@ -4,7 +4,7 @@ from unittest.mock import patch, call, Mock
 from io import StringIO
 
 from game.piece import Piece, Rook, Pawn, Knight, Bishop, Queen, King
-from game.board import Board
+from game.board import Board, NotPieceToMove, NotPermitedMove
 from game.chess import Chess
 from game.main import Cli
 
@@ -80,6 +80,19 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(self.board.get_piece(3, 3), "No piece")
         self.assertEqual(self.board.get_piece(4, 4), "No piece")
 
+    def test_permited_move_pawn(self):
+        self.assertEqual(self.board.permited_move(1, 0, 3, 0), True)
+        self.assertEqual(self.board.permited_move(1, 0, 2, 0), True)
+        self.assertEqual(self.board.permited_move(1, 0, 5, 0), False)
+        self.assertEqual(self.board.permited_move(6, 0, 5, 0), True)
+        self.assertEqual(self.board.permited_move(6, 0, 4, 0), True)
+
+        self.board.__positions__[4][1] = Pawn("WHITE")
+        self.board.__positions__[3][2] = Pawn("BLACK")
+
+        self.assertEqual(self.board.permited_move(4, 1, 3, 2), True)
+
+
     def test_permited_move_knight(self):
 
         self.assertEqual(self.board.permited_move(0, 1, 2, 2), True)
@@ -146,6 +159,19 @@ class TestBoard(unittest.TestCase):
                
 
         self.assertEqual(self.board.permited_move(4, 4, 2, 4), False)
+
+
+    # def test_no_piece_to_move_exception(self):
+    #     # Intentar mover una pieza desde una posición vacía
+    #     self.board.move_piece(3, 3, 4, 3)
+
+    #     with self.assertRaises(NotPieceToMove) as context:
+    #         self.board.move_piece(3, 3, 4, 3)
+
+    #     self.assertEqual(str(context.exception), "No piece to move")
+
+
+
 
 class TestPiece(unittest.TestCase):
     def test_piece_init(self):
