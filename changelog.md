@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Primer Sprint----------------
+## [0.20] - 25-8-24
+Added methods permited_move to the pieces specifically
+
 ## [0.19] - 24-8-24
 Added the permited moves for pawns including the moves when the pawn can eat another piece
 

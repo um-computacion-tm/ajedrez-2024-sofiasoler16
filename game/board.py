@@ -73,74 +73,11 @@ class Board:
     def permited_move(self, from_row, from_col, to_row, to_col):
         piece = self.__positions__[from_row][from_col]
 
-        # movimiento de ROOK
-        if piece.__type__ == "ROOK":
-            if to_row == from_row and to_col != from_col:
-                return True
-            elif to_col == from_col and to_row != from_row:
-                return True
-            else:
-                return False
-        # piece.permited_move_rook(from_row, from_col, to_row, to_col)
-
-        # movimiento de PAWN
-        if piece.__type__ == "PAWN":
-            direction = -1 if piece.__color__ == "WHITE" else 1  # Blancas avanzan hacia arriba (-1), negras hacia abajo (+1)
-            if to_col == from_col:  # Movimiento hacia adelante
-                if (to_row - from_row) == direction and self.__positions__[to_row][to_col] is None:
-                    return True
-                # Primera movida del peón (dos pasos adelante)
-                if (from_row == 6 and piece.__color__ == "WHITE") or (from_row == 1 and piece.__color__ == "BLACK"):
-                    if (to_row - from_row) == 2 * direction and self.__positions__[to_row][to_col] is None and self.__positions__[from_row + direction][from_col] is None:
-                        return True
-            # Captura en diagonal
-            if abs(to_col - from_col) == 1 and (to_row - from_row) == direction:
-                destination_piece = self.__positions__[to_row][to_col]
-                if destination_piece is not None and destination_piece.__color__ != piece.__color__:
-                    return True
-            return False
-
-        # movimiento de KNIGHT
-        if piece.__type__ == "KNIGHT":
-
-            valid_moves = [
-                (2, 1), (2, -1), (-2, 1), (-2, -1),
-                (1, 2), (1, -2), (-1, 2), (-1, -2)]
-            if (from_row - to_row, from_col - to_col) in valid_moves:
-                return True
-            else:
-                return False
-
-
-        # movimiento de BISHOP
-        if piece.__type__ == "BISHOP":
-            if abs(to_row - from_row) == abs(to_col - from_col):
-                return True
-            else:
-                return False
-        
-        # movimiento de QUEEN
-        if piece.__type__ == "QUEEN":
-
-            # Donde dice + o - 1 poner un numero posible entre 1 y 8 --> Pusimos abs
-            n = []
-            if to_row == from_row and to_col != from_col:
-                return True
-            elif to_col == from_col and to_row != from_row:
-                return True
-            elif abs(to_row - from_row) == abs(to_col - from_col):
-                return True
-            else:
-                return False
-
-        # movimiento de KING
-        if piece.__type__ == "KING":
-
-            if abs(from_row - to_row) <= 1 and abs(from_col - to_col) <= 1 and not (from_row == to_row and from_col == to_col):
-                return True
-            else: 
-                return False
-
+        piece = self.__positions__[from_row][from_col]
+        if piece is None:
+            return False  # No hay pieza para mover
+        return piece.permited_move(from_row, from_col, to_row, to_col, self)
+    
     
     #Agregar que una pieza no se pueda mover a donde hay una pieza de su mismo color
     #Agregar que no permita mover una pieza del color que no es el turno
@@ -148,15 +85,14 @@ class Board:
     def move_piece(self, from_row, from_col, to_row, to_col):
         try:
             piece = self.__positions__[from_row][from_col]
-
+            
             if piece is None:
                 raise NotPieceToMove("No piece to move")
-                # print("No piece to move")
-                # return "No piece to move"
+
 
             destination = self.__positions__[to_row][to_col]
 
-                # Verificamos si la posición de destino tiene una pieza del mismo color
+            # Verificamos si la posición de destino tiene una pieza del mismo color
             if destination is not None and destination.__color__ == piece.__color__:
                 self.show_board()
                 raise NotPermitedMove("Cannot move to a position occupied by a piece of the same color")
@@ -164,10 +100,6 @@ class Board:
             if self.permited_move(from_row, from_col, to_row, to_col) == False:
                 self.show_board()
                 raise NotPermitedMove("The piece cannot be moved in this position")
-
-            # elif self.permited_move(from_row, from_col, to_row, to_col) == False:
-            #     print("The piece cannot be moved in this position")
-            #     return "The piece cannot be moved in this position"
 
             self.__positions__[to_row][to_col] = piece
 
