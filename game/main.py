@@ -9,7 +9,7 @@ class Cli():
     def main(self):
         self.play()
 
-    def verify_move(self, chess):
+    def verify_move(self, chess): #Verifica el color del movimeinto
         while True:
             from_row = int(input("From row: "))
             from_col = int(input("From col: "))

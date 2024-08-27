@@ -68,7 +68,9 @@ class Board:
         piece = self.__positions__[row][col]
         if piece is None:
             return "No piece"
+        self.show_board
         return ({piece.__type__}, {piece.__color__})
+    
     
     def permited_move(self, from_row, from_col, to_row, to_col):
         piece = self.__positions__[from_row][from_col]
@@ -79,8 +81,8 @@ class Board:
         return piece.permited_move(from_row, from_col, to_row, to_col, self)
     
     
-    #Agregar que una pieza no se pueda mover a donde hay una pieza de su mismo color
-    #Agregar que no permita mover una pieza del color que no es el turno
+    #Agregar que una pieza no se pueda mover a donde hay una pieza de su mismo color -- LISTO
+    #Agregar que no permita mover una pieza del color que no es el turno -- LISTO
 
     def move_piece(self, from_row, from_col, to_row, to_col):
         try:
@@ -118,8 +120,8 @@ class Board:
             print("Error:", e)
             return str(e)
         except Exception as e:
-            print("Unexpected error:", e)
-            return "Unexpected error"
+            print("Error:", e)
+            return "Error"
     
     def show_board(self):
 
@@ -136,7 +138,8 @@ class Board:
                 if piece is None:
                     print("    ", end=" |")  # Espacio en blanco si no hay pieza
                 else:
-                    print(f" {piece.__type__[0]}{piece.__color__[0]} ", end=" |")  # Muestra inicial del tipo y color de la pieza
+                    # print(f" {piece.__type__[0]}{piece.__color__[0]} ", end=" |")  # Muestra inicial del tipo y color de la pieza
+                    print(" ", piece.show()," ",  end="|")  # Muestra inicial del tipo y color de la pieza
             print()
             print("    " + "------" * 8 + "")  # Línea separadora entre filas
 
@@ -144,3 +147,4 @@ class Board:
 # board.show_board()
 # print(board.get_piece(0,0))
 # print(board.get_piece(7,0))
+ 

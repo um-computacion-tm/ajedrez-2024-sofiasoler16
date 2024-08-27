@@ -45,7 +45,7 @@ class TestChess(unittest.TestCase):
     def test_move_correct_color_white_turn(self, patched_print):
 
         result = self.chess.move_correct_color(7, 0) 
-        self.assertIsNone(result, "Debería permitir mover la pieza blanca en el turno de blancas")
+        self.assertIsNone(result)
 
 
         result = self.chess.move_correct_color(0, 0)
@@ -80,86 +80,6 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(self.board.get_piece(3, 3), "No piece")
         self.assertEqual(self.board.get_piece(4, 4), "No piece")
 
-    def test_permited_move_pawn(self):
-        self.assertEqual(self.board.permited_move(1, 0, 3, 0), True)
-        self.assertEqual(self.board.permited_move(1, 0, 2, 0), True)
-        self.assertEqual(self.board.permited_move(1, 0, 5, 0), False)
-        self.assertEqual(self.board.permited_move(6, 0, 5, 0), True)
-        self.assertEqual(self.board.permited_move(6, 0, 4, 0), True)
-
-        self.board.__positions__[4][1] = Pawn("WHITE")
-        self.board.__positions__[3][2] = Pawn("BLACK")
-
-        self.assertEqual(self.board.permited_move(4, 1, 3, 2), True)
-
-
-    def test_permited_move_knight(self):
-
-        self.assertEqual(self.board.permited_move(0, 1, 2, 2), True)
-        self.assertEqual(self.board.permited_move(0, 1, 2, 0), True)
-
-        self.board.__positions__[4][4] = Knight("BLACK")
-
-        self.assertEqual(self.board.permited_move(4, 4, 2, 3), True)
-        self.assertEqual(self.board.permited_move(4, 4, 2, 5), True)
-        self.assertEqual(self.board.permited_move(4, 4, 6, 5), True)
-        self.assertEqual(self.board.permited_move(4, 4, 6, 3), True)
-        #self.assertEqual(self.board.permited_move(4, 4, 3, 6), True)
-        #self.assertEqual(self.board.permited_move(4, 4, 3, 2), True)
-
-
-        self.assertEqual(self.board.permited_move(4, 4, 3, 5), False)      
-
-    def test_permited_move_line_77(self): 
-        self.board.__positions__[2][2] = Knight("BLACK")
-        self.assertEqual(self.board.__positions__[2][2].__type__, "KNIGHT")
-        
-        self.assertEqual(self.board.get_piece(2, 2), ({'KNIGHT'}, {'BLACK'}))
-        self.assertEqual(self.board.permited_move(2, 2, 4, 3), True)
-
-    def test_permited_move_queen(self):
-
-        self.assertEqual(self.board.permited_move(0, 3, 3, 3), True)
-        self.assertEqual(self.board.permited_move(0, 3, 2, 5), True)
-        self.assertEqual(self.board.permited_move(0, 3, 2, 1), True)
-
-        self.board.__positions__[4][4] = Queen("BLACK")
-
-        self.assertEqual(self.board.permited_move(4, 4, 4, 5), True)
-        self.assertEqual(self.board.permited_move(4, 4, 4, 4), True)
-
-        self.assertEqual(self.board.permited_move(0, 3, 2, 4), False)
-
-    def test_permited_move_rook(self):
-
-        self.assertEqual(self.board.permited_move(0, 0, 3, 2), False)
-
-    def test_permited_move_bishop(self):
-        self.board.__positions__[3][3] = Bishop("BLACK")
-
-        self.assertEqual(self.board.permited_move(3, 3, 4, 4), True)
-        self.assertEqual(self.board.permited_move(3, 3, 2, 4), True)
-        self.assertEqual(self.board.permited_move(3, 3, 2, 2), True)
-        self.assertEqual(self.board.permited_move(3, 3, 4, 2), True)
-        self.assertEqual(self.board.permited_move(3, 3, 5, 5), True)
-
-        self.assertEqual(self.board.permited_move(3, 3, 6, 5), False)
-
-    def test_permited_move_king(self):
-        self.board.__positions__[4][4] = King("BLACK")
-
-        self.assertEqual(self.board.permited_move(4, 4, 4, 3), True)
-        self.assertEqual(self.board.permited_move(4, 4, 4, 5), True)
-        self.assertEqual(self.board.permited_move(4, 4, 3, 4), True)
-        self.assertEqual(self.board.permited_move(4, 4, 5, 4), True)
-        self.assertEqual(self.board.permited_move(4, 4, 5, 5), True)
-        self.assertEqual(self.board.permited_move(4, 4, 3, 5), True)
-        self.assertEqual(self.board.permited_move(4, 4, 3, 3), True)
-        self.assertEqual(self.board.permited_move(4, 4, 5, 3), True)
-               
-
-        self.assertEqual(self.board.permited_move(4, 4, 2, 4), False)
-
 
     # def test_no_piece_to_move_exception(self):
     #     # Intentar mover una pieza desde una posición vacía
@@ -174,10 +94,16 @@ class TestBoard(unittest.TestCase):
 
 
 class TestPiece(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.board = Board()
+        return super().setUp()
+
     def test_piece_init(self):
         piece = Piece("BLACK")
         self.assertEqual(piece.__color__, "BLACK")
         self.assertEqual(piece.__type__, None)
+
     def test_rook_init(self):
         rook = Rook("BLACK")
         self.assertEqual(rook.__color__, "BLACK")
@@ -207,6 +133,93 @@ class TestPiece(unittest.TestCase):
         king = King("WHITE")
         self.assertEqual(king.__color__, "WHITE")
         self.assertEqual(king.__type__, "KING")
+
+    
+    def test_permited_move_pawn(self):
+        self.assertEqual(self.board.permited_move(1, 0, 3, 0), True)
+        self.assertEqual(self.board.permited_move(1, 0, 2, 0), True)
+        self.assertEqual(self.board.permited_move(1, 0, 5, 0), False)
+        self.assertEqual(self.board.permited_move(6, 0, 5, 0), True)
+        self.assertEqual(self.board.permited_move(6, 0, 4, 0), True)
+
+        self.board.__positions__[4][1] = Pawn("WHITE")
+        self.board.__positions__[3][2] = Pawn("BLACK")
+
+        self.assertEqual(self.board.permited_move(4, 1, 3, 2), True)
+
+
+    def test_permited_move_knight(self):
+
+        self.assertEqual(self.board.permited_move(0, 1, 2, 2), True)
+        self.assertEqual(self.board.permited_move(0, 1, 2, 0), True)
+
+        self.board.__positions__[4][4] = Knight("BLACK")
+
+        self.assertEqual(self.board.permited_move(4, 4, 2, 3), True)
+        self.assertEqual(self.board.permited_move(4, 4, 2, 5), True)
+        self.assertEqual(self.board.permited_move(4, 4, 6, 5), True)
+        self.assertEqual(self.board.permited_move(4, 4, 6, 3), True)
+        self.assertEqual(self.board.permited_move(4, 4, 3, 6), True)
+        self.assertEqual(self.board.permited_move(4, 4, 3, 2), True)
+
+
+        self.assertEqual(self.board.permited_move(4, 4, 3, 5), False)      
+
+    def test_permited_move_line_77(self): 
+        self.board.__positions__[2][2] = Knight("BLACK")
+        self.assertEqual(self.board.__positions__[2][2].__type__, "KNIGHT")
+        
+        self.assertEqual(self.board.get_piece(2, 2), ({'KNIGHT'}, {'BLACK'}))
+        self.assertEqual(self.board.permited_move(2, 2, 4, 3), True)
+
+    def test_permited_move_queen(self):
+
+        self.assertEqual(self.board.permited_move(0, 3, 3, 3), True)
+        self.assertEqual(self.board.permited_move(0, 3, 2, 5), True)
+        self.assertEqual(self.board.permited_move(0, 3, 2, 1), True)
+
+        self.board.__positions__[4][4] = Queen("BLACK")
+
+        self.assertEqual(self.board.permited_move(4, 4, 4, 5), True)
+        self.assertEqual(self.board.permited_move(4, 4, 4, 4), True)
+
+        self.assertEqual(self.board.permited_move(0, 3, 2, 4), False)
+
+    def test_permited_move_rook(self):
+
+        self.assertEqual(self.board.permited_move(0, 0, 3, 2), False)
+
+        self.board.__positions__[4][4] = Rook("BLACK")
+
+        self.assertEqual(self.board.permited_move(4, 4, 4, 2), True)
+        self.assertEqual(self.board.permited_move(4, 4, 2, 4), True)
+
+    def test_permited_move_bishop(self):
+        self.board.__positions__[3][3] = Bishop("BLACK")
+
+        self.assertEqual(self.board.permited_move(3, 3, 4, 4), True)
+        self.assertEqual(self.board.permited_move(3, 3, 2, 4), True)
+        self.assertEqual(self.board.permited_move(3, 3, 2, 2), True)
+        self.assertEqual(self.board.permited_move(3, 3, 4, 2), True)
+        self.assertEqual(self.board.permited_move(3, 3, 5, 5), True)
+
+        self.assertEqual(self.board.permited_move(3, 3, 6, 5), False)
+
+    def test_permited_move_king(self):
+        self.board.__positions__[4][4] = King("BLACK")
+
+        self.assertEqual(self.board.permited_move(4, 4, 4, 3), True)
+        self.assertEqual(self.board.permited_move(4, 4, 4, 5), True)
+        self.assertEqual(self.board.permited_move(4, 4, 3, 4), True)
+        self.assertEqual(self.board.permited_move(4, 4, 5, 4), True)
+        self.assertEqual(self.board.permited_move(4, 4, 5, 5), True)
+        self.assertEqual(self.board.permited_move(4, 4, 3, 5), True)
+        self.assertEqual(self.board.permited_move(4, 4, 3, 3), True)
+        self.assertEqual(self.board.permited_move(4, 4, 5, 3), True)
+               
+
+        self.assertEqual(self.board.permited_move(4, 4, 2, 4), False)
+
 
 class TestMain(unittest.TestCase):  
     @patch('builtins.print')

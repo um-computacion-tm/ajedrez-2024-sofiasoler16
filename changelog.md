@@ -5,17 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
+#--------------Segundo Sprint----------------
+## [0.20] - 26-8-24
+Added the real pieces to the board
+
+
 #--------------Primer Sprint----------------
-## [0.20] - 25-8-24
+## [0.19] - 25-8-24
 Added methods permited_move to the pieces specifically
 
-## [0.19] - 24-8-24
+## [0.18] - 24-8-24
 Added the permited moves for pawns including the moves when the pawn can eat another piece
 
-## [0.18] - 22-8-24
+## [0.17] - 22-8-24
 Added exceptions to move_piece method in board and added the error of moving a piece where there is already a piece of the same color
 
-## [0.17] - 20-8-24
+## [0.165] - 20-8-24
 FIxed complexity metods in board and added tests
 
 ## [0.16] - 19-8-24
