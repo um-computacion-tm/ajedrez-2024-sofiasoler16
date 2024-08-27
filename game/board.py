@@ -25,23 +25,10 @@ class Board:
         self.__positions__[7][7] = Rook("WHITE") #"Rook White"
         self.__positions__[7][0] = Rook("WHITE") #"Rook White"
 
-        #lugares pawn
-        self.__positions__[1][0] = Pawn("BLACK") #"PawnBlack"
-        self.__positions__[1][1] = Pawn("BLACK") #"PawnBlack"
-        self.__positions__[1][2] = Pawn("BLACK") #"PawnBlack"
-        self.__positions__[1][3] = Pawn("BLACK") #"PawnBlack"
-        self.__positions__[1][4] = Pawn("BLACK") #"PawnBlack"
-        self.__positions__[1][5] = Pawn("BLACK") #"PawnBlack"
-        self.__positions__[1][6] = Pawn("BLACK") #"PawnBlack"
-        self.__positions__[1][7] = Pawn("BLACK") #"PawnBlack"
-        self.__positions__[6][0] = Pawn("WHITE") #"PawnWhite"
-        self.__positions__[6][1] = Pawn("WHITE") #"PawnWhite"
-        self.__positions__[6][2] = Pawn("WHITE") #"PawnWhite"
-        self.__positions__[6][3] = Pawn("WHITE") #"PawnWhite"
-        self.__positions__[6][4] = Pawn("WHITE") #"PawnWhite"
-        self.__positions__[6][5] = Pawn("WHITE") #"PawnWhite"
-        self.__positions__[6][6] = Pawn("WHITE") #"PawnWhite"
-        self.__positions__[6][7] = Pawn("WHITE") #"PawnWhite"
+
+        for col in range(8):
+            self.__positions__[1][col] = Pawn("BLACK") #"PawnBlack"
+            self.__positions__[6][col] = Pawn("WHITE") #"PawnWhite"
 
         #lugares knight
         self.__positions__[0][1] = Knight("BLACK") #"KnightBlack"
