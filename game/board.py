@@ -1,4 +1,9 @@
-from game.piece import Rook, Pawn, Knight, Bishop, Queen, King
+from game.piece import Piece, Queen, King
+from game.rook import Rook
+from game.pawn import Pawn
+from game.knight import Knight
+from game.bishop import Bishop
+
 
 
 #Que hacer con los permited_move, donde los pongo?
@@ -51,12 +56,18 @@ class Board:
         self.__positions__[0][4] = King("BLACK") #"KingBlack"
         self.__positions__[7][4] = King("WHITE") #"KingWhite"
     
+
+    #SI NO HAY PIEA DICE: TOO MANY VALUES TO UNPACK (EXPECTED 2) PERO NO ENTIENDO DONDE ESTAN ESOS VALORES QUE TRATA DE UNPACK
     def get_piece(self, row, col):
         piece = self.__positions__[row][col]
+        print("LA PIEZA ES " ,piece)
         if piece is None:
+            print("LA PIEZA ES 1111 " ,piece)
             return "No piece"
-        self.show_board
-        return ({piece.__type__}, {piece.__color__})
+        else:
+            print("LA PIEZA ES 2222 " ,piece)
+            return ({piece.__type__}, {piece.__color__})
+        
     
     
     def permited_move(self, from_row, from_col, to_row, to_col):
@@ -130,7 +141,8 @@ class Board:
             print()
             print("    " + "------" * 8 + "")  # Línea separadora entre filas
 
-# board = Board()
+
+board = Board()
 # board.show_board()
 # print(board.get_piece(0,0))
 # print(board.get_piece(7,0))

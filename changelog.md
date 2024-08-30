@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Segundo Sprint----------------
-## [0.20] - 26-8-24
+
+## [0.21] - 29-8-24
+
+
+## [0.20] - 27-8-24
 Added the real pieces to the board
 
 

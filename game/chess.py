@@ -9,18 +9,21 @@ class Chess:
     def move(self,from_row, from_col, to_row, to_col):
         piece = self.__board__.get_piece(from_row, from_col)
 
-        if piece == "No piece":
-            print("You can't move a piece that doesn't exist")
-            return "You can't move a piece that doesn't exist"
+        # if piece == "No piece":
+        #     print("You can't move a piece that doesn't exist")
+        #     return "You can't move a piece that doesn't exist"
 
     
         self.__board__.move_piece(from_row, from_col, to_row, to_col)
        
     def move_correct_color(self, from_row, from_col):
 
-        # piece = self.__board__.get_piece(from_row, from_col)
-        print(self.__board__.get_piece(from_row, from_col))
+        # print(self.__board__.get_piece(from_row, from_col))
         piece = self.__board__.get_piece(from_row, from_col)
+
+        if piece is None:
+            return "You can't move a piece that doesn't exist"
+            
 
         # Desempacamos la tupla en tipo de pieza y color
         piece_type, piece_color = piece

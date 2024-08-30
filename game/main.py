@@ -35,6 +35,15 @@ class Cli():
 
                 to_row = int(input("To row: "))
                 to_col = int(input("To col: "))
+                # while True:
+                #         # Intentamos mover la pieza
+                #     move_error = chess.move(from_row, from_col, to_row, to_col)
+                    
+                #     if move_error is None:
+                #         break  # Si no hubo errores, rompemos el bucle y cambiamos de turno
+                #     else:
+                #         print(move_error)  # Si hubo un error, se muestra y se vuelve a pedir la entrada
+
 
                 chess.move(from_row, from_col,to_row,to_col)
                 print("La pieza que quedo en la posicion es: ", chess.__board__.get_piece(from_row, from_col))

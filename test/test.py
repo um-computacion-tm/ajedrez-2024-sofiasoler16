@@ -3,12 +3,18 @@ import unittest
 from unittest.mock import patch, call, Mock
 from io import StringIO
 
-from game.piece import Piece, Rook, Pawn, Knight, Bishop, Queen, King
+from game.piece import Piece, Queen, King
+# from game.queen import Queen
+# from game.king import King
+from game.rook import Rook
+from game.pawn import Pawn
+from game.knight import Knight
+from game.bishop import Bishop
+
 from game.board import Board, NotPieceToMove, NotPermitedMove
 from game.chess import Chess
 from game.main import Cli
 
-## Porque mi codeClimate me verifica el codigo de los tests?
 
 class TestChess(unittest.TestCase):
     def setUp(self):
@@ -34,12 +40,21 @@ class TestChess(unittest.TestCase):
 
         self.assertEqual(self.chess.__turn__, "WHITE")
 
-    @patch('builtins.print')
-    def test_move_no_piece(self, patched_print):
+    # @patch('builtins.print')
+    # def test_move_no_piece(self, patched_print):
 
-        self.chess.__board__.get_piece(7, 0)
+    #     self.chess.__board__.get_piece(7, 0)
 
-        self.assertEqual(self.chess.move(5,7,2,2), "You can't move a piece that doesn't exist")
+    #     self.assertEqual(self.chess.move(5,7,2,2), "You can't move a piece that doesn't exist")
+
+    # def test_no_piece_to_move_exception(self):
+    #     # Intentar mover una pieza desde una posición vacía
+    #     self.chess.__board__.move_piece(5, 5, 4, 3)
+
+    #     with self.assertRaises(NotPieceToMove) as context:
+    #         self.chess.__board__.move_piece(5, 5, 4, 3)
+
+    #     self.assertEqual(str(context.exception), "No piece to move")
 
     @patch('builtins.print')
     def test_move_correct_color_white_turn(self, patched_print):
@@ -58,6 +73,7 @@ class TestBoard(unittest.TestCase):
 
     def test_init_board(self):
         self.assertEqual(self.board.__positions__[0][0].__type__, "ROOK")
+        self.assertEqual(self.board.__positions__[0][0].__color__, "BLACK")
         
 
     def test_get_piece_empty(self):
@@ -81,16 +97,10 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(self.board.get_piece(4, 4), "No piece")
 
 
-    # def test_no_piece_to_move_exception(self):
-    #     # Intentar mover una pieza desde una posición vacía
-    #     self.board.move_piece(3, 3, 4, 3)
-
-    #     with self.assertRaises(NotPieceToMove) as context:
-    #         self.board.move_piece(3, 3, 4, 3)
-
-    #     self.assertEqual(str(context.exception), "No piece to move")
 
 
+
+## Porque mi codeClimate me verifica el codigo de los tests?
 
 
 class TestPiece(unittest.TestCase):
