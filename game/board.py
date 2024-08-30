@@ -57,15 +57,13 @@ class Board:
         self.__positions__[7][4] = King("WHITE") #"KingWhite"
     
 
-    #SI NO HAY PIEA DICE: TOO MANY VALUES TO UNPACK (EXPECTED 2) PERO NO ENTIENDO DONDE ESTAN ESOS VALORES QUE TRATA DE UNPACK
+    #SI NO HAY PIEZA DICE: TOO MANY VALUES TO UNPACK (EXPECTED 2) PERO NO ENTIENDO DONDE ESTAN ESOS VALORES QUE TRATA DE UNPACK
     def get_piece(self, row, col):
         piece = self.__positions__[row][col]
-        print("LA PIEZA ES " ,piece)
+        
         if piece is None:
-            print("LA PIEZA ES 1111 " ,piece)
             return "No piece"
         else:
-            print("LA PIEZA ES 2222 " ,piece)
             return ({piece.__type__}, {piece.__color__})
         
     
@@ -81,12 +79,14 @@ class Board:
     
     #Agregar que una pieza no se pueda mover a donde hay una pieza de su mismo color -- LISTO
     #Agregar que no permita mover una pieza del color que no es el turno -- LISTO
+    #Agregar que si una pieza no se puede mover a esa posicion vuelva a pedir fila y columna
 
     def move_piece(self, from_row, from_col, to_row, to_col):
         try:
             piece = self.__positions__[from_row][from_col]
             
             if piece is None:
+                self.show_board()
                 raise NotPieceToMove("No piece to move")
 
 

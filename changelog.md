@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning].
 
 #--------------Segundo Sprint----------------
 
-## [0.21] - 29-8-24
+## [0.22] - 30-8-24
+Fixed the error for No piece to move and added a loop to ask for row and column again if error is raised
 
+## [0.21] - 29-8-24
+Separated the pieces classes and fixed Error for No piece to move
 
 ## [0.20] - 27-8-24
 Added the real pieces to the board

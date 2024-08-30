@@ -5,6 +5,9 @@ from game.piece import Piece
 class InvalidPosition(Exception):
     pass
 
+class NotPieceToMove(Exception):
+    pass
+
 class Cli():
     def main(self):
         self.play()
@@ -13,12 +16,16 @@ class Cli():
         while True:
             from_row = int(input("From row: "))
             from_col = int(input("From col: "))
+            
             print("The piece you have chosen is: ", chess.__board__.get_piece(from_row, from_col))
             
             # Intentamos mover la pieza si es del color correcto
             move_by_color = chess.move_correct_color(from_row, from_col)
+            
             if move_by_color is None:  # Si no hay error, se seleccionó la pieza correcta
                 return from_row, from_col
+            elif move_by_color == "You can't move a piece that doesn't exist":
+                print("You can't move a piece that doesn't exist")
             else:
                 print(move_by_color)  # Si hay un error, se vuelve a pedir la pieza
 
