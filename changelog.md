@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning].
 
 #--------------Segundo Sprint----------------
 
+## [0.23] - 31-8-24
+FIxed compelexity for pawns 
+
 ## [0.22] - 30-8-24
 Fixed the error for No piece to move and added a loop to ask for row and column again if error is raised
 
