@@ -6,9 +6,11 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Segundo Sprint----------------
+## [0.24] - 1-9-24
+Added the possibility to continue with the same turn if a invalid position or letter is entered
 
 ## [0.23] - 31-8-24
-FIxed compelexity for pawns 
+Fixed compelexity for pawns 
 
 ## [0.22] - 30-8-24
 Fixed the error for No piece to move and added a loop to ask for row and column again if error is raised
@@ -16,7 +18,7 @@ Fixed the error for No piece to move and added a loop to ask for row and column 
 ## [0.21] - 29-8-24
 Separated the pieces classes and fixed Error for No piece to move
 
-## [0.20] - 27-8-24
+## [0.20] - 27-8-24 (Martes)
 Added the real pieces to the board
 
 
@@ -30,7 +32,7 @@ Added the permited moves for pawns including the moves when the pawn can eat ano
 ## [0.17] - 22-8-24
 Added exceptions to move_piece method in board and added the error of moving a piece where there is already a piece of the same color
 
-## [0.165] - 20-8-24
+## [0.165] - 20-8-24 (Martes)
 FIxed complexity metods in board and added tests
 
 ## [0.16] - 19-8-24
@@ -51,5 +53,5 @@ Added function move to chess, move_piece method to board, and fixed get_piece me
 ## [0.11] - 14-8-24
 Added get_piece method to board, and the pawns on the board
 
-## [0.10] - 13-8-24
+## [0.10] - 13-8-24 (Martes)
 Added classes board, chess, and rook

@@ -12,7 +12,7 @@ class Chess:
         piece = self.__board__.get_piece(from_row, from_col)
     
         self.__board__.move_piece(from_row, from_col, to_row, to_col)
-       
+        
     def move_correct_color(self, from_row, from_col):
 
         # print(self.__board__.get_piece(from_row, from_col))
