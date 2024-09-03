@@ -1,5 +1,8 @@
 from game.board import Board
 
+class InvalidPosition(Exception):
+    pass
+
 class NotPieceToMove(Exception):
     pass
 
@@ -8,9 +11,16 @@ class Chess:
         self.__board__ = Board()
         self.__turn__ = "WHITE"
 
+# Falta hacer que si ingresa valor out of range, al ejecutar move, se vuelva a producir el bucle y no frene
+
     def move(self,from_row, from_col, to_row, to_col):
+
         piece = self.__board__.get_piece(from_row, from_col)
-    
+
+        # Validar que los valores estén dentro de los límites del tablero
+        if not (0 <= to_row <= 7) or not (0 <= to_col <= 7):
+            raise InvalidPosition("Invalid position. Please enter a value between 0 and 7.")
+        
         self.__board__.move_piece(from_row, from_col, to_row, to_col)
         
     def move_correct_color(self, from_row, from_col):

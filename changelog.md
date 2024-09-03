@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Segundo Sprint----------------
+## [0.25] - 2-9-24
+Added function validate_range_to to the cli
+
 ## [0.24] - 1-9-24
 Added the possibility to continue with the same turn if a invalid position or letter is entered
 

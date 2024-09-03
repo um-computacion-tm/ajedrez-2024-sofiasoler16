@@ -51,21 +51,8 @@ class Cli():
             try:
                 from_row, from_col = self.verify_move(chess)
 
-                while True:
-                    try:
-                        to_row = int(input("To row: "))
-                        to_col = int(input("To col: "))
+                to_row, to_col = self.validate_range_to()
 
-                # Validar que los valores estén dentro de los límites del tablero
-                        if not (0 <= to_row <= 7) or not (0 <= to_col <= 7):
-                            raise InvalidPosition("Invalid position. Please enter a value between 0 and 7.")
-                        break 
-
-                    except ValueError:
-                        print("Invalid input. Please enter a number.")
-                    except InvalidPosition as e:
-                        print(e)
-# Validar que los valores estén dentro de los límites del tablero (por ejemplo, entre 0 y 7)
 
                 chess.move(from_row, from_col,to_row,to_col)
                 print("La pieza que quedo en la posicion es: ", chess.__board__.get_piece(from_row, from_col))
@@ -81,6 +68,25 @@ class Cli():
                 print("error", e)
                 return "error"
                 
+
+    def validate_range_to(self):
+        try:
+            while True:
+                to_row = int(input("To row: "))
+                to_col = int(input("To col: "))
+
+                    # Validar que los valores estén dentro de los límites del tablero
+                if not (0 <= to_row <= 7) or not (0 <= to_col <= 7):
+                    raise InvalidPosition("Invalid position. Please enter a value between 0 and 7.")
+                break 
+
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+        except InvalidPosition as e:
+            print(e)
+
+        return to_row, to_col
+
 if __name__ == "__main__":
     cli = Cli()
     cli.play()
