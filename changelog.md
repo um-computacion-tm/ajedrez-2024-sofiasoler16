@@ -6,26 +6,29 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Segundo Sprint----------------
-## [0.25] - 2-9-24
+## [0.25] - 4-9-24
+Fixed error for Raise exception in move_piece try and except.
+
+## [0.24] - 2-9-24
 Added function validate_range_to to the cli
 
-## [0.24] - 1-9-24
+## [0.23] - 1-9-24
 Added the possibility to continue with the same turn if a invalid position or letter is entered
 
-## [0.23] - 31-8-24
+## [0.22] - 31-8-24
 Fixed compelexity for pawns 
 
-## [0.22] - 30-8-24
+## [0.21] - 30-8-24
 Fixed the error for No piece to move and added a loop to ask for row and column again if error is raised
 
-## [0.21] - 29-8-24
+## [0.20] - 29-8-24
 Separated the pieces classes and fixed Error for No piece to move
-
-## [0.20] - 27-8-24 (Martes)
-Added the real pieces to the board
 
 
 #--------------Primer Sprint----------------
+## [0.195] - 27-8-24 (Martes)
+Added the real pieces to the board
+
 ## [0.19] - 25-8-24
 Added methods permited_move to the pieces specifically
 

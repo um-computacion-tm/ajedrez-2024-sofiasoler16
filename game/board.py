@@ -79,47 +79,47 @@ class Board:
     
     #Agregar que una pieza no se pueda mover a donde hay una pieza de su mismo color -- LISTO
     #Agregar que no permita mover una pieza del color que no es el turno -- LISTO
-    #Agregar que si una pieza no se puede mover a esa posicion vuelva a pedir fila y columna
+    #Agregar que si una pieza no si levanta excepcion, vuelva a pedir fila y columna
 
     def move_piece(self, from_row, from_col, to_row, to_col):
-        try:
-            piece = self.__positions__[from_row][from_col]
-            
-            if piece is None:
-                self.show_board()
-                raise NotPieceToMove("No piece to move")
-
-
-            destination = self.__positions__[to_row][to_col]
-
-            # Verificamos si la posición de destino tiene una pieza del mismo color
-            if destination is not None and destination.__color__ == piece.__color__:
-                self.show_board()
-                raise NotPermitedMove("Cannot move to a position occupied by a piece of the same color")
-
-            if self.permited_move(from_row, from_col, to_row, to_col) == False:
-                self.show_board()
-                raise NotPermitedMove("The piece cannot be moved in this position")
-
-            self.__positions__[to_row][to_col] = piece
-
-            self.__positions__[from_row][from_col] = None
-
-            print(f"Moved piece from: ", {from_row}, {from_col}, "to: ", {to_row}, {to_col})
-
+        b = False
+        piece = self.__positions__[from_row][from_col]
+        if piece is None:
             self.show_board()
+            raise NotPieceToMove("No piece to move")
+
+        destination = self.__positions__[to_row][to_col]
+
+        # Verificamos si la posición de destino tiene una pieza del mismo color
+        if destination is not None and destination.__color__ == piece.__color__:
+            self.show_board()
+            raise NotPermitedMove("Cannot move to a position occupied by a piece of the same color")
+
+        if self.permited_move(from_row, from_col, to_row, to_col) == False:
+            self.show_board()
+            raise NotPermitedMove("The piece cannot be moved in this position")
+
+        self.__positions__[to_row][to_col] = piece
+
+        self.__positions__[from_row][from_col] = None
+
+        print(f"Moved piece from: ", {from_row}, {from_col}, "to: ", {to_row}, {to_col})
+
+        self.show_board()
+        b = True
+        return b
 
     #Hacer que cuando se equivoca en el turno, se le vuelva a pedir repetir el turno
 
-        except NotPieceToMove as e:
-            print("Error:", e)
-            return str(e)
-        except NotPermitedMove as e:
-            print("Error:", e)
-            return str(e)
-        except Exception as e:
-            print("Error:", e)
-            return "Error"
+        # except NotPieceToMove as e:
+        #     print("Errorrr:", e)
+        #     return str(e)
+        # except NotPermitedMove as e:
+        #     print("Error:", e)
+        #     return str(e)
+        # except Exception as e:
+        #     print("Error:", e)
+        #     return "Error"
     
     def show_board(self):
 

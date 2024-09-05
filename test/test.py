@@ -47,15 +47,6 @@ class TestChess(unittest.TestCase):
 
     #     self.assertEqual(self.chess.move(5,7,2,2), "You can't move a piece that doesn't exist")
 
-    # def test_no_piece_to_move_exception(self):
-    #     # Intentar mover una pieza desde una posición vacía
-    #     self.chess.__board__.move_piece(5, 5, 4, 3)
-
-    #     with self.assertRaises(NotPieceToMove) as context:
-    #         self.chess.__board__.move_piece(5, 5, 4, 3)
-
-    #     self.assertEqual(str(context.exception), "No piece to move")
-
     @patch('builtins.print')
     def test_move_correct_color_white_turn(self, patched_print):
 
@@ -88,19 +79,26 @@ class TestBoard(unittest.TestCase):
 
         self.assertEqual(self.board.get_piece(0, 0), "No piece")
 
+    # @patch('builtins.print')
+    # def test_move_piece_no_piece_get(self, patched_print):
+
+    #     self.assertEqual(self.board.move_piece(3, 3, 4, 4), "No piece to move")
+
+    #     self.assertEqual(self.board.get_piece(3, 3), "No piece")
+    #     self.assertEqual(self.board.get_piece(4, 4), "No piece")
+
+    def test_permited_move_false_not_permited(self):
+        self.assertEqual(self.board.permited_move(0, 0, 5, 5), False)
+
     @patch('builtins.print')
-    def test_move_piece_no_piece(self, patched_print):
+    def test_permited_move_false_no_piece(self, patched_print):
+        self.assertEqual(self.board.permited_move(5, 5, 6, 5), False)
 
-        self.assertEqual(self.board.move_piece(3, 3, 4, 4), "No piece to move")
+    @patch('builtins.print') 
+    def test_no_piece_to_move_exception_move(self, patched_print):
 
-        self.assertEqual(self.board.get_piece(3, 3), "No piece")
-        self.assertEqual(self.board.get_piece(4, 4), "No piece")
-
-
-
-
-
-## Porque mi codeClimate me verifica el codigo de los tests?
+        with self.assertRaises(NotPieceToMove) as exc:
+            self.board.move_piece(5, 5, 1, 0)
 
 
 class TestPiece(unittest.TestCase):

@@ -12,6 +12,7 @@ class Chess:
         self.__turn__ = "WHITE"
 
 # Falta hacer que si ingresa valor out of range, al ejecutar move, se vuelva a producir el bucle y no frene
+# Preguntar por docker
 
     def move(self,from_row, from_col, to_row, to_col):
 
@@ -21,14 +22,14 @@ class Chess:
         if not (0 <= to_row <= 7) or not (0 <= to_col <= 7):
             raise InvalidPosition("Invalid position. Please enter a value between 0 and 7.")
         
-        self.__board__.move_piece(from_row, from_col, to_row, to_col)
+        # self.__board__.move_piece(from_row, from_col, to_row, to_col)
+        # print(self.__board__.move_piece(from_row, from_col, to_row, to_col))
+        return (self.__board__.move_piece(from_row, from_col, to_row, to_col))
         
     def move_correct_color(self, from_row, from_col):
 
-        # print(self.__board__.get_piece(from_row, from_col))
         piece = self.__board__.get_piece(from_row, from_col)
         if piece == "No piece":
-            
             return "You can't move a piece that doesn't exist"
             
         # Desempacamos la tupla en tipo de pieza y color

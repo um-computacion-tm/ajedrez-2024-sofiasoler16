@@ -1,5 +1,4 @@
 from game.chess import Chess
-from game.board import Board
 from game.piece import Piece
 
 class InvalidPosition(Exception):
@@ -49,12 +48,16 @@ class Cli():
         
         while a == "y":
             try:
+
                 from_row, from_col = self.verify_move(chess)
 
                 to_row, to_col = self.validate_range_to()
 
+                # Quiero hacer que si move levanta excepcion, vuelva a ejecutar play
+                if chess.move(from_row, from_col,to_row,to_col) != True:
+                    self.play()
+                #print(chess.move(from_row, from_col,to_row,to_col))
 
-                chess.move(from_row, from_col,to_row,to_col)
                 print("La pieza que quedo en la posicion es: ", chess.__board__.get_piece(from_row, from_col))
 
                 print("La pieza que esta en la nueva posicion es: ", chess.__board__.get_piece(to_row, to_col))
@@ -75,7 +78,7 @@ class Cli():
                 to_row = int(input("To row: "))
                 to_col = int(input("To col: "))
 
-                    # Validar que los valores estén dentro de los límites del tablero
+                # Validar que los valores estén dentro de los límites del tablero
                 if not (0 <= to_row <= 7) or not (0 <= to_col <= 7):
                     raise InvalidPosition("Invalid position. Please enter a value between 0 and 7.")
                 break 
