@@ -21,20 +21,29 @@ class Cli():
                 
                 print("The piece you have chosen is: ", chess.__board__.get_piece(from_row, from_col))
                 
-                # Intentamos mover la pieza si es del color correcto
-                move_by_color = chess.move_correct_color(from_row, from_col)
-                
-                if move_by_color is None:  # Si no hay error, se seleccionó la pieza correcta
-                    return from_row, from_col
-                elif move_by_color == "You can't move a piece that doesn't exist":
-                    print("You can't move a piece that doesn't exist")
-                else:
-                    print(move_by_color)  
+
+                # Verificamos el color de la pieza usando la nueva función
+                if self.verify_color(chess, from_row, from_col):
+                    return from_row, from_col  # Si la verificación es exitosa, retornamos las coordenadas
+    
 
             except ValueError:
                 print("Invalid input. Please enter a number.")
             except InvalidPosition as e:
                 print(e)
+
+    def verify_color(self, chess, from_row, from_col):
+        move_by_color = chess.move_correct_color(from_row, from_col)
+        
+        if move_by_color is None:  # Si no hay error, se seleccionó la pieza correcta
+            return True  # Verificación exitosa
+        elif move_by_color == "You can't move a piece that doesn't exist":
+            print("You can't move a piece that doesn't exist")
+        else:
+            print(move_by_color)
+        
+        return False  # Verificación fallida
+
 
 
     def play(self):
@@ -65,7 +74,7 @@ class Cli():
 
             except (NotPieceToMove, NotPermitedMove, InvalidPosition) as e:
                 print("Error:", e)
-                print("Try again", "Is the turn of:", chess.__turn__)
+                print("Try again", "It's still ", chess.__turn__, "turn")
 
             except Exception as e:
                 print("error", e)

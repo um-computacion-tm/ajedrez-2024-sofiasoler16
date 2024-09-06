@@ -74,7 +74,7 @@ class Board:
     
     #Agregar que una pieza no se pueda mover a donde hay una pieza de su mismo color -- LISTO
     #Agregar que no permita mover una pieza del color que no es el turno -- LISTO
-    #Agregar que si una pieza no si levanta excepcion, vuelva a pedir fila y columna
+    #Agregar que si una pieza evanta excepcion, vuelva a pedir fila y columna -- LISTO
 
     def move_piece(self, from_row, from_col, to_row, to_col):
         b = False
@@ -104,18 +104,6 @@ class Board:
         b = True
         return b
 
-    #Hacer que cuando se equivoca en el turno, se le vuelva a pedir repetir el turno
-
-        # except NotPieceToMove as e:
-        #     print("Errorrr:", e)
-        #     return str(e)
-        # except NotPermitedMove as e:
-        #     print("Error:", e)
-        #     return str(e)
-        # except Exception as e:
-        #     print("Error:", e)
-        #     return "Error"
-    
     def show_board(self):
 
         print("    ", end="")
@@ -134,6 +122,7 @@ class Board:
                     print(" ", piece.show()," ",  end="|")  # Muestra inicial del tipo y color de la pieza
             print()
             print("    " + "------" * 8 + "")  # Línea separadora entre filas
+
 
 
 board = Board()
