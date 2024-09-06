@@ -4,14 +4,9 @@ from game.pawn import Pawn
 from game.knight import Knight
 from game.bishop import Bishop
 
-
+from game.exceptions import NotPermitedMove, NotPieceToMove
 
 #Que hacer con los permited_move, donde los pongo?
-class NotPermitedMove(Exception):
-    pass
-
-class NotPieceToMove(Exception):
-    pass
 
 
 
@@ -90,7 +85,7 @@ class Board:
 
         destination = self.__positions__[to_row][to_col]
 
-        # Verificamos si la posición de destino tiene una pieza del mismo color
+        # Verificamos si la posición de destino tieneom_row, from_col,to_row,to_col)) una pieza del mismo color
         if destination is not None and destination.__color__ == piece.__color__:
             self.show_board()
             raise NotPermitedMove("Cannot move to a position occupied by a piece of the same color")
@@ -136,7 +131,6 @@ class Board:
                 if piece is None:
                     print("    ", end=" |")  # Espacio en blanco si no hay pieza
                 else:
-                    # print(f" {piece.__type__[0]}{piece.__color__[0]} ", end=" |")  # Muestra inicial del tipo y color de la pieza
                     print(" ", piece.show()," ",  end="|")  # Muestra inicial del tipo y color de la pieza
             print()
             print("    " + "------" * 8 + "")  # Línea separadora entre filas

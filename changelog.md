@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Segundo Sprint----------------
+## [0.26] - 5-9-24
+Added the possibility of continue the same turn if the player enters an invalid movement
+
 ## [0.25] - 4-9-24
 Fixed error for Raise exception in move_piece try and except.
 

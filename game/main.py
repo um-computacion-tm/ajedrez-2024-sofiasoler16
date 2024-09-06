@@ -1,11 +1,7 @@
 from game.chess import Chess
 from game.piece import Piece
 
-class InvalidPosition(Exception):
-    pass
-
-class NotPieceToMove(Exception):
-    pass
+from game.exceptions import InvalidPosition, NotPieceToMove, NotPermitedMove
 
 class Cli():
     def main(self):
@@ -54,8 +50,8 @@ class Cli():
                 to_row, to_col = self.validate_range_to()
 
                 # Quiero hacer que si move levanta excepcion, vuelva a ejecutar play
-                if chess.move(from_row, from_col,to_row,to_col) != True:
-                    self.play()
+                chess.move(from_row, from_col,to_row,to_col) 
+            
                 #print(chess.move(from_row, from_col,to_row,to_col))
 
                 print("La pieza que quedo en la posicion es: ", chess.__board__.get_piece(from_row, from_col))
@@ -66,6 +62,10 @@ class Cli():
                 if a == "y":
                     chess.change_turn()
                     print("Es turno de: ", chess.__turn__)
+
+            except (NotPieceToMove, NotPermitedMove, InvalidPosition) as e:
+                print("Error:", e)
+                print("Try again", "Is the turn of:", chess.__turn__)
 
             except Exception as e:
                 print("error", e)

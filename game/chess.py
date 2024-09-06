@@ -1,10 +1,5 @@
 from game.board import Board
-
-class InvalidPosition(Exception):
-    pass
-
-class NotPieceToMove(Exception):
-    pass
+from game.exceptions import InvalidPosition, NotPieceToMove
 
 class Chess:
     def __init__(self):
@@ -24,7 +19,7 @@ class Chess:
         
         # self.__board__.move_piece(from_row, from_col, to_row, to_col)
         # print(self.__board__.move_piece(from_row, from_col, to_row, to_col))
-        return (self.__board__.move_piece(from_row, from_col, to_row, to_col))
+        return ("Esto devuelve move: ", self.__board__.move_piece(from_row, from_col, to_row, to_col))
         
     def move_correct_color(self, from_row, from_col):
 
