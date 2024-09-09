@@ -28,21 +28,11 @@ class Pawn(Piece):
             
             if self.is_valid_starting_row(from_row) and self.is_double_step(from_row, to_row, direction) and self.is_empty_square(board, to_row, to_col):
                 return True
-
-            
-            # if (from_row == 6 and self.__color__ == "WHITE") or (from_row == 1 and self.__color__ == "BLACK"):
-            #     if (to_row - from_row) == 2 * direction and board.get_piece(to_row, to_col) == "No piece":
-            #         return True
                 
         if abs(to_col - from_col) == 1 and (to_row - from_row) == direction:
             if self.is_enemy_piece(board, to_row, to_col):
                 return True        
 
-        
-        # if abs(to_col - from_col) == 1 and (to_row - from_row) == direction:
-        #     destination_piece = board.get_piece(to_row, to_col)
-        #     if destination_piece != "No piece" and destination_piece[1] != self.__color__:
-        #         return True
         return False
     
     def show(self):

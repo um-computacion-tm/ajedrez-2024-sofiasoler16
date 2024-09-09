@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Segundo Sprint----------------
+## [0.28] - 8-9-24
+
 ## [0.27] - 6-9-24
 Added function verify_color to cli
 

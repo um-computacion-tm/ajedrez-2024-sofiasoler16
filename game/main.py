@@ -13,15 +13,12 @@ class Cli():
             try:
                 from_row = int(input("From row: "))
                 from_col = int(input("From col: "))
-
-                                
+              
                 if not (0 <= from_row <= 7) or not (0 <= from_col <= 7):
                     raise InvalidPosition("Invalid position. Please enter a value between 0 and 7.")
 
-                
                 print("The piece you have chosen is: ", chess.__board__.get_piece(from_row, from_col))
-                
-
+            
                 # Verificamos el color de la pieza usando la nueva función
                 if self.verify_color(chess, from_row, from_col):
                     return from_row, from_col  # Si la verificación es exitosa, retornamos las coordenadas
@@ -60,8 +57,6 @@ class Cli():
 
                 # Quiero hacer que si move levanta excepcion, vuelva a ejecutar play
                 chess.move(from_row, from_col,to_row,to_col) 
-            
-                #print(chess.move(from_row, from_col,to_row,to_col))
 
                 print("La pieza que quedo en la posicion es: ", chess.__board__.get_piece(from_row, from_col))
 

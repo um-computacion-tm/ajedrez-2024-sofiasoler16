@@ -3,13 +3,13 @@ import unittest
 from unittest.mock import patch, call, Mock
 from io import StringIO
 
-from game.piece import Piece, Queen, King
-# from game.queen import Queen
-# from game.king import King
+from game.piece import Piece
+from game.king import King
 from game.rook import Rook
 from game.pawn import Pawn
 from game.knight import Knight
 from game.bishop import Bishop
+from game.queen import Queen
 
 from game.board import Board, NotPieceToMove, NotPermitedMove
 from game.chess import Chess
@@ -169,6 +169,8 @@ class TestPiece(unittest.TestCase):
         self.assertEqual(self.board.permited_move(4, 4, 6, 3), True)
         self.assertEqual(self.board.permited_move(4, 4, 3, 6), True)
         self.assertEqual(self.board.permited_move(4, 4, 3, 2), True)
+        self.assertEqual(self.board.permited_move(4, 4, 5, 6), True)
+        self.assertEqual(self.board.permited_move(4, 4, 5, 2), True)
 
 
         self.assertEqual(self.board.permited_move(4, 4, 3, 5), False)      

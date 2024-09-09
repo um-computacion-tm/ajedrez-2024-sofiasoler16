@@ -1,8 +1,10 @@
-from game.piece import Piece, Queen, King
+from game.piece import Piece
 from game.rook import Rook
 from game.pawn import Pawn
 from game.knight import Knight
 from game.bishop import Bishop
+from game.queen import Queen
+from game.king import King
 
 from game.exceptions import NotPermitedMove, NotPieceToMove
 
