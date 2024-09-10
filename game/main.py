@@ -42,13 +42,13 @@ class Cli():
         return False  # Verificación fallida
 
 
-
     def play(self):
-        chess = Chess() 
+        chess = Chess()
         #board = Board() #No se usa porque si creo un board aca esoy inhiendo al otro board, estoy como creando un board nuevo que no le he movido ninguna pieza
         a = "y"
         
         while a == "y":
+            chess.__board__.show_board() 
             try:
 
                 from_row, from_col = self.verify_move(chess)
@@ -57,7 +57,9 @@ class Cli():
 
                 # Quiero hacer que si move levanta excepcion, vuelva a ejecutar play
                 chess.move(from_row, from_col,to_row,to_col) 
-
+                chess.__board__.show_board() 
+                
+                chess.__board__.eat_piece(from_row, from_col, to_row, to_col)
                 print("La pieza que quedo en la posicion es: ", chess.__board__.get_piece(from_row, from_col))
 
                 print("La pieza que esta en la nueva posicion es: ", chess.__board__.get_piece(to_row, to_col))

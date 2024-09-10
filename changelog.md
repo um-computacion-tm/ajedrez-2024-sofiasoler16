@@ -6,8 +6,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
-#--------------Segundo Sprint----------------
+#--------------Segundo Sprint----------------(10 commits)
+## [0.295] - 10-9-24
+FIxed position of show_board from board to chess
+
+## [0.29] - 9-9-24
+Added function eat_piece to board
+
 ## [0.28] - 8-9-24
+Fixed error with the movement of the Knight and Added classes king and queen
 
 ## [0.27] - 6-9-24
 Added function verify_color to cli
@@ -34,7 +41,7 @@ Fixed the error for No piece to move and added a loop to ask for row and column 
 Separated the pieces classes and fixed Error for No piece to move
 
 
-#--------------Primer Sprint----------------
+#--------------Primer Sprint----------------(12 commits)
 ## [0.195] - 27-8-24 (Martes)
 Added the real pieces to the board
 

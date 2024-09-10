@@ -57,7 +57,7 @@ class Board:
         self.__positions__[7][4] = King("WHITE") #"KingWhite"
     
 
-    #SI NO HAY PIEZA DICE: TOO MANY VALUES TO UNPACK (EXPECTED 2) PERO NO ENTIENDO DONDE ESTAN ESOS VALORES QUE TRATA DE UNPACK
+
     def get_piece(self, row, col):
         piece = self.__positions__[row][col]
         
@@ -82,21 +82,20 @@ class Board:
     #Agregar que si una pieza evanta excepcion, vuelva a pedir fila y columna -- LISTO
 
     def move_piece(self, from_row, from_col, to_row, to_col):
-        b = False
         piece = self.__positions__[from_row][from_col]
         if piece is None:
-            self.show_board()
+            #self.show_board()
             raise NotPieceToMove("No piece to move")
 
         destination = self.__positions__[to_row][to_col]
 
         # Verificamos si la posición de destino tieneom_row, from_col,to_row,to_col)) una pieza del mismo color
         if destination is not None and destination.__color__ == piece.__color__:
-            self.show_board()
+            #self.show_board()
             raise NotPermitedMove("Cannot move to a position occupied by a piece of the same color")
 
         if self.permited_move(from_row, from_col, to_row, to_col) == False:
-            self.show_board()
+            #self.show_board()
             raise NotPermitedMove("The piece cannot be moved in this position")
 
         self.__positions__[to_row][to_col] = piece
@@ -105,9 +104,7 @@ class Board:
 
         print(f"Moved piece from: ", {from_row}, {from_col}, "to: ", {to_row}, {to_col})
 
-        self.show_board()
-        b = True
-        return b
+        #self.show_board()
     
     def eat_piece(self, from_row, from_col, to_row, to_col):
 
