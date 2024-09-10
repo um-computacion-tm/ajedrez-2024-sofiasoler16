@@ -20,6 +20,9 @@ class Board:
             for _ in range(8):
                 col.append(None)
             self.__positions__.append(col)
+        # ESte es el mejor lugar para poner la funcion de comer piezas??????????????????????????????????
+        self.pieces_from_white = [] #Las piezas que se comio el NEGRO del BLANCO
+        self.pieces_from_black = [] #Las piezas que se comio el BLANCO del NEGRO
 
         #lugares rook
         self.__positions__[0][0] = Rook("BLACK") #"Rook Black"
@@ -105,6 +108,20 @@ class Board:
         self.show_board()
         b = True
         return b
+    
+    def eat_piece(self, from_row, from_col, to_row, to_col):
+
+        piece = self.__positions__[from_row][from_col]
+        destination = self.__positions__[to_row][to_col]
+        if destination is not None and destination.__color__ != piece.__color__:
+            if piece.__color__ == "WHITE":
+                self.pieces_from_white.append(piece)
+            else:
+                self.pieces_from_black.append(piece)
+        else:
+            return False
+
+
 
     def show_board(self):
 
