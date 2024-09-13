@@ -7,11 +7,11 @@ class Rook(Piece):
         self.__type__ = "ROOK" 
 
     def permited_move(self, from_row, from_col, to_row, to_col, board):
-        if to_row == from_row and to_col != from_col:
+        permited_move_orthogonal = self.permited_move_orthogonal(from_row, from_col, to_row, to_col, board)
+        if permited_move_orthogonal == True:
             return True
-        elif to_col == from_col and to_row != from_row:
-            return True
-        return False
+        else:
+            return False
     
     def show(self):
         if self.__color__ == "WHITE":

@@ -6,7 +6,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
-#--------------Segundo Sprint----------------(10 commits)
+#--------------Tercer Sprint----------------
+
+## [0.30] - 12-9-24
+Created function permited_move_diagonal and permited_move_orthogonal in piece class to avoid repetition
+
+
+#--------------Segundo Sprint----------------(11 commits)
 ## [0.295] - 10-9-24
 FIxed position of show_board from board to chess
 
