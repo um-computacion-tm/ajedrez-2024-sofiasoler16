@@ -7,11 +7,14 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Tercer Sprint----------------
+## [0.32] - 14-9-24
+Implemented eat_piece to print the list of pieces in Cli
 
-## [0.30] - 12-9-24
+## [0.31] - 12-9-24
 Created function permited_move_diagonal and permited_move_orthogonal in piece class to avoid repetition
 
-
+## [0.30] - 13-9-24
+Fixed show_board
 #--------------Segundo Sprint----------------(11 commits)
 ## [0.295] - 10-9-24
 FIxed position of show_board from board to chess

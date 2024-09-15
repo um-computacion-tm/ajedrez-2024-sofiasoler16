@@ -122,7 +122,7 @@ class TestBoard(unittest.TestCase):
         self.board.__positions__[3][5] = Pawn("BLACK")
 
         self.board.eat_piece(4, 6, 3, 5)
-        self.assertEqual(self.board.pieces_from_white[0].__type__, "PAWN")
+        self.assertEqual(self.board.pieces_from_white[0], '♟')
         self.assertEqual(len(self.board.pieces_from_black), 0)
 
     def test_eat_piece_black_eats_white(self):
@@ -131,7 +131,7 @@ class TestBoard(unittest.TestCase):
 
         self.board.eat_piece(3, 5, 4, 6)
 
-        self.assertEqual(self.board.pieces_from_black[0].__type__, "PAWN")
+        self.assertEqual(self.board.pieces_from_black[0], '♙')
         self.assertEqual(len(self.board.pieces_from_black), 1)
 
     def test_eat_no_piece(self):

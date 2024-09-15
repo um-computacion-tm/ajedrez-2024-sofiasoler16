@@ -80,6 +80,7 @@ class Board:
     #Agregar que una pieza no se pueda mover a donde hay una pieza de su mismo color -- LISTO
     #Agregar que no permita mover una pieza del color que no es el turno -- LISTO
     #Agregar que si una pieza evanta excepcion, vuelva a pedir fila y columna -- LISTO
+    #Implementar la funcion eat_piece 
 
     def move_piece(self, from_row, from_col, to_row, to_col):
         piece = self.__positions__[from_row][from_col]
@@ -110,11 +111,14 @@ class Board:
 
         piece = self.__positions__[from_row][from_col]
         destination = self.__positions__[to_row][to_col]
-        if destination is not None and destination.__color__ != piece.__color__:
-            if piece.__color__ == "WHITE":
-                self.pieces_from_white.append(piece)
-            else:
-                self.pieces_from_black.append(piece)
+        if destination is not None:
+            if destination.__color__ != piece.__color__:
+                if piece.__color__ == "WHITE":
+                    self.pieces_from_white.append(piece.show())
+                    return ("Las piezas que BLANCO se comio de NEGRO son: ", self.pieces_from_white)
+                else:
+                    self.pieces_from_black.append(piece.show())
+                    return ("Las piezas que NEGRO se comio de BLANCO son: ", self.pieces_from_black)
         else:
             return False
 
