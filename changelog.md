@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Tercer Sprint----------------
+## [0.33] - 15-9-24
+Added function change_pawn_for_other, define_new_piece_black and define_new_piece_white to Chess to permit the change of the pawns for a already taken piece
+
 ## [0.32] - 14-9-24
 Implemented eat_piece to print the list of pieces in Cli
 

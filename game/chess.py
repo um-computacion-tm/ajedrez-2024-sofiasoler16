@@ -16,9 +16,7 @@ class Chess:
         # Validar que los valores estén dentro de los límites del tablero
         if not (0 <= to_row <= 7) or not (0 <= to_col <= 7):
             raise InvalidPosition("Invalid position. Please enter a value between 0 and 7.")
-        
-        # self.__board__.move_piece(from_row, from_col, to_row, to_col)
-        # print(self.__board__.move_piece(from_row, from_col, to_row, to_col))
+
         return ("Esto devuelve move: ", self.__board__.move_piece(from_row, from_col, to_row, to_col))
         
     def move_correct_color(self, from_row, from_col):
@@ -44,3 +42,32 @@ class Chess:
             self.__turn__ = "BLACK"
         else:
             self.__turn__ = "WHITE"
+
+    def change_pawn_for_other(self, from_row, from_col):
+        piece_type = self.__board__.get_piece(from_row, from_col)
+        piece_position = self.__board__.__positions__[from_row][from_col]
+
+        if piece_type == "Pawn" and piece_type.__color__ == "WHITE":
+            if from_row == 0:
+                self.define_new_piece(from_row, from_col)
+        else:
+            if from_row == 7:
+                self.define_new_piece(from_row, from_col)
+
+    def define_new_piece_black(self, from_row, from_col):
+                print("Las piezas a elegir son: ", self.__board__.pieces_from_black)
+                index = int(input("Enter the NUMBER of position in the list of piece you want to change: "))
+                new_piece =self.__board__.pieces_from_black_piece[index]
+                self.__board__.__positions__[from_row][from_col] = new_piece
+                print("Pieza definida en la posicion es : ", new_piece.show())
+
+                return new_piece
+    
+    def define_new_piece_white(self, from_row, from_col):
+                print("Las piezas a elegir son: ", self.__board__.pieces_from_white)
+                index = int(input("Enter the NUMBER of position in the list of piece you want to change: "))
+                new_piece =self.__board__.pieces_from_white_piece[index]
+                self.__board__.__positions__[from_row][from_col] = new_piece
+                print("Pieza definida en la posicion es : ", new_piece.show())
+
+                return new_piece

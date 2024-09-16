@@ -57,6 +57,36 @@ class TestChess(unittest.TestCase):
         result = self.chess.move_correct_color(0, 0)
         self.assertEqual(result, "You can't move a piece that is not your color")
 
+    @patch('builtins.print')
+    @patch('builtins.input', side_effect = ["0"])
+    def test_define_new_piece_black(self, patched_print, mock_input):
+        self.chess.__board__.pieces_from_black = ["♕"]
+        self.chess.__board__.pieces_from_black_piece = [Queen("BLACK")]
+
+        self.chess.__board__.__positions__[7][0] = Pawn("BLACK")
+
+        function = self.chess.define_new_piece_black(7, 0)
+
+
+        self.assertEqual(self.chess.__board__.__positions__[7][0].__type__, "QUEEN")
+        self.assertIsInstance(function, Queen)
+
+
+    @patch('builtins.print')
+    @patch('builtins.input', side_effect = ["0"])
+    def test_define_new_piece_white(self, patched_print, mock_input):
+        self.chess.__board__.pieces_from_white = ["♛"]
+        self.chess.__board__.pieces_from_white_piece = [Queen("WHITE")]
+
+        self.chess.__board__.__positions__[7][0] = Pawn("WHITE")
+
+        function = self.chess.define_new_piece_white(7, 0)
+
+
+        self.assertEqual(self.chess.__board__.__positions__[7][0].__type__, "QUEEN")
+        self.assertIsInstance(function, Queen)
+
+
 class TestBoard(unittest.TestCase):
     def setUp(self):
         self.board = Board()

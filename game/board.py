@@ -23,6 +23,8 @@ class Board:
         # ESte es el mejor lugar para poner la funcion de comer piezas??????????????????????????????????
         self.pieces_from_white = [] #Las piezas que se comio el NEGRO del BLANCO
         self.pieces_from_black = [] #Las piezas que se comio el BLANCO del NEGRO
+        self.pieces_from_white_piece = [] #Las piezas que se comio el NEGRO del BLANCO
+        self.pieces_from_black_piece = [] #Las piezas que se comio el BLANCO del NEGRO
 
         #lugares rook
         self.__positions__[0][0] = Rook("BLACK") #"Rook Black"
@@ -115,10 +117,14 @@ class Board:
             if destination.__color__ != piece.__color__:
                 if piece.__color__ == "WHITE":
                     self.pieces_from_white.append(piece.show())
-                    return ("Las piezas que BLANCO se comio de NEGRO son: ", self.pieces_from_white)
+                    self.pieces_from_white_piece.append(piece)
+                    print("Las piezas que BLANCO se comio de NEGRO son: ")
+                    return (self.pieces_from_white)
                 else:
                     self.pieces_from_black.append(piece.show())
-                    return ("Las piezas que NEGRO se comio de BLANCO son: ", self.pieces_from_black)
+                    self.pieces_from_black_piece.append(piece)
+                    print("Las piezas que NEGRO se comio de BLANCO son: ")
+                    return (self.pieces_from_black)
         else:
             return False
 
