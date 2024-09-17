@@ -56,10 +56,14 @@ class Cli():
                 to_row, to_col = self.validate_range_to()
 
                 print(chess.__board__.eat_piece(from_row, from_col, to_row, to_col))
-
-                # Quiero hacer que si move levanta excepcion, vuelva a ejecutar play
+                # Quiero hacer que si move levanta excepcion, vuelva a ejecutar play -- LISTO
                 chess.move(from_row, from_col,to_row,to_col) 
+
+                chess.change_pawn_for_other(from_row, from_col, to_row, to_col)
+
                 chess.__board__.show_board() 
+
+
 
                 print("La pieza que quedo en la posicion es: ", chess.__board__.get_piece(from_row, from_col))
 
