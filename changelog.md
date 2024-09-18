@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Tercer Sprint----------------
+## [0.35] - 17-9-24
+FIxed error in eat_piece and change_pawn_for_other that made to not eat the correct piece color
+
 ## [0.34] - 16-9-24
 Implemented function change_pawn_for_other en Main
 

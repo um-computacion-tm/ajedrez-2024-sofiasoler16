@@ -1,5 +1,5 @@
 from game.board import Board
-from game.exceptions import InvalidPosition, NotPieceToMove
+from game.exceptions import InvalidPosition, NotPieceToMove, NotPieceToReplace
 
 class Chess:
     def __init__(self):
@@ -43,16 +43,7 @@ class Chess:
         else:
             self.__turn__ = "WHITE"
 
-    # def change_pawn_for_other(self, from_row, from_col):
-    #     piece_type = self.__board__.get_piece(from_row, from_col)
-    #     piece_position = self.__board__.__positions__[from_row][from_col]
-
-    #     if piece_type == "Pawn" and piece_type.__color__ == "WHITE":
-    #         if from_row == 0:
-    #             self.define_new_piece_white(from_row, from_col)
-    #     else:
-    #         if from_row == 7:
-    #             self.define_new_piece_black(from_row, from_col)
+# BIEN, PERO SUGIERE PARA CAMBIAR PIEZAS QUE COMIO BLANCO DEL NEGRO Y LA CAMBIA POR UNA PIEZA DEL NEGRO Y NO DEL BLANCO
 
     def change_pawn_for_other(self, from_row, from_col, to_row, to_col):
         destination = self.__board__.get_piece(to_row, to_col)  # Obtener la pieza en la posición final
@@ -62,17 +53,16 @@ class Chess:
             if self.__board__.pieces_from_black_piece:  # Verificar si hay piezas disponibles
                 self.define_new_piece_white(from_row, from_col, to_row, to_col)
             else:
-                print("No hay piezas disponibles para reemplazar el peón blanco.")
+                raise NotPieceToReplace("No pieces have been eaten from WHITE")
         
         # Verificar si el peón es negro y ha llegado a la fila 7
         elif "PAWN" in destination[0] and "BLACK" in destination[1] and to_row == 7:
             if self.__board__.pieces_from_white_piece:  # Verificar si hay piezas disponibles
                 self.define_new_piece_black(from_row, from_col, to_row, to_col)
             else:
-                print("No hay piezas disponibles para reemplazar el peón negro.")
+                raise NotPieceToReplace("No pieces have been eaten from BLACK")
 
-
-    def define_new_piece_black(self, from_row, from_col, to_row, to_col):
+    def define_new_piece_white(self, from_row, from_col, to_row, to_col):
                 print("Las piezas a elegir son: ", self.__board__.pieces_from_white)
                 index = int(input("Enter the NUMBER of position in the list of piece you want to change: "))
                 new_piece =self.__board__.pieces_from_white_piece[index]
@@ -81,7 +71,7 @@ class Chess:
 
                 return new_piece
     
-    def define_new_piece_white(self, from_row, from_col, to_row, to_col):
+    def define_new_piece_black(self, from_row, from_col, to_row, to_col):
                 print("Las piezas a elegir son: ", self.__board__.pieces_from_black)
                 index = int(input("Enter the NUMBER of position in the list of piece you want to change: "))
                 new_piece =self.__board__.pieces_from_black_piece[index]

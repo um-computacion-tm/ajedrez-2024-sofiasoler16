@@ -65,7 +65,7 @@ class TestChess(unittest.TestCase):
 
         self.chess.__board__.__positions__[7][0] = Pawn("BLACK")
 
-        function = self.chess.define_new_piece_black(7, 0)
+        function = self.chess.define_new_piece_black(6, 0, 7, 0)
 
 
         self.assertEqual(self.chess.__board__.__positions__[7][0].__type__, "QUEEN")
@@ -80,11 +80,35 @@ class TestChess(unittest.TestCase):
 
         self.chess.__board__.__positions__[7][0] = Pawn("WHITE")
 
-        function = self.chess.define_new_piece_white(7, 0)
+        function = self.chess.define_new_piece_white(6, 0, 7, 0)
 
 
         self.assertEqual(self.chess.__board__.__positions__[7][0].__type__, "QUEEN")
         self.assertIsInstance(function, Queen)
+
+
+    @patch('builtins.print')
+    @patch('builtins.input', side_effect = ["1"])
+    def test_replace_piece(self, patched_print, mock_input):
+        self.chess.__board__.__positions__[0][7] = None
+
+        self.chess.__board__.__positions__[1][7] = Pawn("WHITE")
+
+        self.chess.__board__.pieces_from_black_piece = [Rook("BLACK"), Queen("BLACK")]
+        self.chess.__board__.pieces_from_black = ["♖", "♕"]
+
+        self.chess.__board__.pieces_from_white_piece = [Rook("WHITE"), Queen("WHITE")]
+        self.chess.__board__.pieces_from_white = ["♜", "♛"]
+
+        self.chess.move(1, 7, 0, 7)
+
+        self.assertEqual(self.chess.__board__.get_piece(0, 7), ({'PAWN'}, {'WHITE'}))
+
+        self.chess.change_pawn_for_other(1, 7, 0, 7)
+
+        self.assertEqual(self.chess.__board__.get_piece(0, 7), ({'QUEEN'}, {'WHITE'}))
+        
+
 
 
 class TestBoard(unittest.TestCase):
@@ -147,19 +171,22 @@ class TestBoard(unittest.TestCase):
         with self.assertRaises(NotPermitedMove) as exc:
             self.board.move_piece(4, 6, 5, 5)
 
-    def test_eat_piece_white_eats_black(self):
-        self.board.__positions__[4][6] = Pawn("WHITE")
-        self.board.__positions__[3][5] = Pawn("BLACK")
-
-        self.board.eat_piece(4, 6, 3, 5)
-        self.assertEqual(self.board.pieces_from_white[0], '♟')
-        self.assertEqual(len(self.board.pieces_from_black), 0)
-
-    def test_eat_piece_black_eats_white(self):
+    @patch('builtins.print')
+    def test_eat_piece_white_eats_black(self, patched_print):
         self.board.__positions__[4][6] = Pawn("WHITE")
         self.board.__positions__[3][5] = Pawn("BLACK")
 
         self.board.eat_piece(3, 5, 4, 6)
+        
+        self.assertEqual(self.board.pieces_from_white[0], '♟') #Significa que la pieza comida fue la blanca
+        self.assertEqual(len(self.board.pieces_from_black), 0)
+
+    @patch('builtins.print')
+    def test_eat_piece_black_eats_white(self, patched_print):
+        self.board.__positions__[4][6] = Pawn("WHITE")
+        self.board.__positions__[3][5] = Pawn("BLACK")
+
+        self.board.eat_piece(4, 6, 3, 5)
 
         self.assertEqual(self.board.pieces_from_black[0], '♙')
         self.assertEqual(len(self.board.pieces_from_black), 1)
@@ -168,6 +195,8 @@ class TestBoard(unittest.TestCase):
         self.board.__positions__[4][6] = Pawn("WHITE")
 
         self.assertEqual(self.board.eat_piece(4, 6, 3, 5), False)
+
+
 
 class TestPiece(unittest.TestCase):
 

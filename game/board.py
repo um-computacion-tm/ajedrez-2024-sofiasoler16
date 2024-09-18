@@ -116,15 +116,15 @@ class Board:
         if destination is not None:
             if destination.__color__ != piece.__color__:
                 if piece.__color__ == "WHITE":
-                    self.pieces_from_white.append(destination.show())
-                    self.pieces_from_white_piece.append(destination)
-                    print("Las piezas que BLANCO se comio de NEGRO son: ")
-                    return (self.pieces_from_white)
-                else:
                     self.pieces_from_black.append(destination.show())
                     self.pieces_from_black_piece.append(destination)
-                    print("Las piezas que NEGRO se comio de BLANCO son: ")
+                    print("Las piezas que BLANCO se comio de NEGRO son: ")
                     return (self.pieces_from_black)
+                else:
+                    self.pieces_from_white.append(destination.show())
+                    self.pieces_from_white_piece.append(destination)
+                    print("Las piezas que NEGRO se comio de BLANCO son: ")
+                    return (self.pieces_from_white)
         else:
             return False
 

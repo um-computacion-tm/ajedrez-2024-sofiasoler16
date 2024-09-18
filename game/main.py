@@ -1,7 +1,7 @@
 from game.chess import Chess
 from game.piece import Piece
 
-from game.exceptions import InvalidPosition, NotPieceToMove, NotPermitedMove
+from game.exceptions import InvalidPosition, NotPieceToMove, NotPermitedMove, NotPieceToReplace
 
 class Cli():
     def main(self):
@@ -74,7 +74,7 @@ class Cli():
                     chess.change_turn()
                     print("Es turno de: ", chess.__turn__)
 
-            except (NotPieceToMove, NotPermitedMove, InvalidPosition) as e:
+            except (NotPieceToMove, NotPermitedMove, InvalidPosition, NotPieceToReplace) as e:
                 print("Error:", e)
                 print("Try again", "It's still ", chess.__turn__, "turn")
 
