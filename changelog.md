@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Tercer Sprint----------------
+## [0.36] - 19-9-24
+Created function to show the eaten pieces to player and implemented on Cli
+
 ## [0.35] - 17-9-24
 FIxed error in eat_piece and change_pawn_for_other that made to not eat the correct piece color
 

@@ -43,6 +43,14 @@ class Chess:
         else:
             self.__turn__ = "WHITE"
 
+    def show_eaten_pieces(self):
+         if self.__turn__ == "WHITE" and len(self.__board__.pieces_from_black) > 0:
+              return "The eaten pieces from black are: ", self.__board__.pieces_from_black
+         elif self.__turn__ == "BLACK" and len(self.__board__.pieces_from_white) > 0:
+              return "The eaten pieces from white are: ", self.__board__.pieces_from_white
+         else:
+              return "No pieces have been eaten yet"
+
 # BIEN, PERO SUGIERE PARA CAMBIAR PIEZAS QUE COMIO BLANCO DEL NEGRO Y LA CAMBIA POR UNA PIEZA DEL NEGRO Y NO DEL BLANCO
 
     def change_pawn_for_other(self, from_row, from_col, to_row, to_col):
@@ -68,7 +76,6 @@ class Chess:
                 new_piece =self.__board__.pieces_from_white_piece[index]
                 self.__board__.__positions__[to_row][to_col] = new_piece
                 print("Pieza definida en la posicion es : ", new_piece.show())
-
                 return new_piece
     
     def define_new_piece_black(self, from_row, from_col, to_row, to_col):

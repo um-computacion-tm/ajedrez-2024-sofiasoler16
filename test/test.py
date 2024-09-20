@@ -2,6 +2,7 @@ import unittest
 
 from unittest.mock import patch, call, Mock
 from io import StringIO
+from unittest.mock import patch, MagicMock
 
 from game.piece import Piece
 from game.king import King
@@ -14,6 +15,8 @@ from game.queen import Queen
 from game.board import Board, NotPieceToMove, NotPermitedMove
 from game.chess import Chess
 from game.main import Cli
+
+from game.exceptions import InvalidPosition, NotPieceToMove, NotPermitedMove, NotPieceToReplace
 
 
 class TestChess(unittest.TestCase):
@@ -332,6 +335,7 @@ class TestMain(unittest.TestCase):
 
     def setUp(self):
         self.cli = Cli()
+        self.chess = Chess()
 
         
     @patch('builtins.print')
@@ -341,8 +345,35 @@ class TestMain(unittest.TestCase):
 
         self.assertEqual(self.cli.play(), "error")
 
-    # def test_verify_move(self):
 
+    @patch('builtins.print')
+    def test_verify_color(self, patched_print):
+
+        result = self.chess.move_correct_color(7, 0)
+        self.assertIsNone(result)
+
+        self.assertEqual(self.cli.verify_color(self.chess, 7, 0), True)
+
+    def test_verify_color_no_piece(self):
+
+        self.chess.move_correct_color(5, 5)
+
+        self.assertEqual(self.cli.verify_color(self.chess, 5, 5), False)
+        
+
+    def test_verify_color_no_piece(self):
+
+        self.chess.move_correct_color(5, 5)
+
+        self.assertEqual(self.cli.verify_color(self.chess, 5, 5), False)
+        
+
+
+    @patch('builtins.print', side_effect= [9,9])
+    def verify_move_invalid_position(self, patched_print):
+
+        with self.assertRaises(InvalidPosition) as exc:
+            self.cli.verify_move(self.chess)
 
 
 

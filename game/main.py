@@ -63,12 +63,13 @@ class Cli():
 
                 chess.__board__.show_board() 
 
+                # print("La pieza que quedo en la posicion es: ", chess.__board__.get_piece(from_row, from_col))
 
-
-                print("La pieza que quedo en la posicion es: ", chess.__board__.get_piece(from_row, from_col))
-
-                print("La pieza que esta en la nueva posicion es: ", chess.__board__.get_piece(to_row, to_col))
+                # print("La pieza que esta en la nueva posicion es: ", chess.__board__.get_piece(to_row, to_col))
                 
+            
+                print(chess.show_eaten_pieces())
+
                 a = input("Do you want to continue? (y/n): ")
                 if a == "y":
                     chess.change_turn()
