@@ -1,8 +1,8 @@
 import unittest
 
-from unittest.mock import patch, call, Mock
+from unittest.mock import patch
 from io import StringIO
-from unittest.mock import patch, MagicMock
+
 
 from game.piece import Piece
 from game.king import King
@@ -112,6 +112,13 @@ class TestChess(unittest.TestCase):
         self.assertEqual(self.chess.__board__.get_piece(0, 7), ({'QUEEN'}, {'WHITE'}))
         
 
+    def test_verify_winner(self):
+        self.chess.__board__.pieces_from_black_piece = [Rook("BLACK"), Rook("BLACK"), Knight("BLACK"), Knight("BLACK"), 
+                                                        Bishop("BLACK"), Bishop("BLACK"), Queen("BLACK"), King("BLACK"), 
+                                                        Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), 
+                                                        Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK")]
+
+        self.assertEqual(self.chess.verify_winner(), "WHITE WINS")
 
 
 class TestBoard(unittest.TestCase):
@@ -354,20 +361,20 @@ class TestMain(unittest.TestCase):
 
         self.assertEqual(self.cli.verify_color(self.chess, 7, 0), True)
 
-    def test_verify_color_no_piece(self):
+    @patch('builtins.print')
+    def test_verify_color_no_piece(self, patched_print):
 
         self.chess.move_correct_color(5, 5)
 
         self.assertEqual(self.cli.verify_color(self.chess, 5, 5), False)
         
-
-    def test_verify_color_no_piece(self):
+    @patch('builtins.print')
+    def test_verify_color_no_piece(self, patched_print):
 
         self.chess.move_correct_color(5, 5)
 
         self.assertEqual(self.cli.verify_color(self.chess, 5, 5), False)
         
-
 
     @patch('builtins.print', side_effect= [9,9])
     def verify_move_invalid_position(self, patched_print):
@@ -375,6 +382,46 @@ class TestMain(unittest.TestCase):
         with self.assertRaises(InvalidPosition) as exc:
             self.cli.verify_move(self.chess)
 
+    # @patch('builtins.print')
+    # def test_verify_winner(self, patched_print):
+    #     self.chess.__board__.pieces_from_black_piece = [Rook("BLACK"), Rook("BLACK"), Knight("BLACK"), Knight("BLACK"), 
+    #                                                     Bishop("BLACK"), Bishop("BLACK"), Queen("BLACK"), King("BLACK"), 
+    #                                                     Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), 
+    #                                                     Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK")]
+
+
+    #     self.assertEqual(self.cli.play(), "WHITE WINS")
+
+    # def test_verify_end_game_called(self):
+
+    #     self.chess.__board__.__positions__[5][5] = Queen("BLACK") #"RookBlack"
+    #     for col in range(8):
+    #         self.chess.__board__.__positions__[1][col] = None #"PawnBlack"
+    #         self.chess.__board__.__positions__[0][col] = None 
+    #     print(self.chess.__board__.get_piece(5, 5))
+    #     self.cli.play()
+
+    @patch('builtins.print')
+    @patch ('builtins.input', side_effect = [6,6,4,6])
+    def test_verify_end_game_called(self, patched_print, mock_input):
+        # Modificar el tablero directamente
+        self.chess.__board__.__positions__[5][5] = Queen("BLACK")
+        for col in range(8):
+            self.chess.__board__.__positions__[1][col] = None  # Eliminar todas las piezas negras de la fila 1
+            self.chess.__board__.__positions__[0][col] = None  # Eliminar todas las piezas negras de la fila 0
+
+        self.chess.__board__.pieces_from_black_piece = [Rook("BLACK"), Rook("BLACK"), Knight("BLACK"), Knight("BLACK"), 
+                                                        Bishop("BLACK"), Bishop("BLACK"), Queen("BLACK"), King("BLACK"), 
+                                                        Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), 
+                                                        Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK")]
+
+
+        # Asegurarse de que `self.cli` use el mismo tablero que acabamos de modificar
+        self.cli.chess = self.chess
+
+        self.assertEqual(self.chess.__board__.get_piece(5, 5), ({'QUEEN'}, {'BLACK'}))
+
+        self.assertIsNone(self.cli.play())
 
 
 if __name__ == '__main__':

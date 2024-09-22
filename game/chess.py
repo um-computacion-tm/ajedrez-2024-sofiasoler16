@@ -50,6 +50,15 @@ class Chess:
               return "The eaten pieces from white are: ", self.__board__.pieces_from_white
          else:
               return "No pieces have been eaten yet"
+         
+    def verify_winner(self):
+         if len(self.__board__.pieces_from_black_piece) == 16:
+              return "WHITE WINS"
+         elif len(self.__board__.pieces_from_white_piece) == 16:
+              return "BLACK WINS"
+         else:
+              return False
+              
 
 # BIEN, PERO SUGIERE PARA CAMBIAR PIEZAS QUE COMIO BLANCO DEL NEGRO Y LA CAMBIA POR UNA PIEZA DEL NEGRO Y NO DEL BLANCO
 

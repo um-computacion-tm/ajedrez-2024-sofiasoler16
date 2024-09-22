@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Tercer Sprint----------------
+## [0.37] - 22-9-24
+Added function verify_winner to chess
+
 ## [0.36] - 19-9-24
 Created function to show the eaten pieces to player and implemented on Cli
 

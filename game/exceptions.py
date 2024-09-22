@@ -12,5 +12,8 @@ class NotPermitedMove(Exception):
 class NotPieceToReplace(Exception):
     pass
 
+class GameEnded(Exception):
+    pass
+
 
 

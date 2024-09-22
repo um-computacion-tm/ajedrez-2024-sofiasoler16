@@ -1,9 +1,12 @@
 from game.chess import Chess
 from game.piece import Piece
 
-from game.exceptions import InvalidPosition, NotPieceToMove, NotPermitedMove, NotPieceToReplace
+from game.exceptions import InvalidPosition, NotPieceToMove, NotPermitedMove, NotPieceToReplace, GameEnded
 
 class Cli():
+    def __init__(self):
+        self.chess = Chess()
+
     def main(self):
         self.play()
 
@@ -43,46 +46,49 @@ class Cli():
 
 
     def play(self):
-        chess = Chess()
+        # chess = Chess()
         #board = Board() #No se usa porque si creo un board aca esoy inhiendo al otro board, estoy como creando un board nuevo que no le he movido ninguna pieza
         a = "y"
         
         while a == "y":
-            chess.__board__.show_board() 
+            self.chess.__board__.show_board() 
             try:
 
-                from_row, from_col = self.verify_move(chess)
+                from_row, from_col = self.verify_move(self.chess)
 
                 to_row, to_col = self.validate_range_to()
 
-                print(chess.__board__.eat_piece(from_row, from_col, to_row, to_col))
+                print(self.chess.__board__.eat_piece(from_row, from_col, to_row, to_col))
                 # Quiero hacer que si move levanta excepcion, vuelva a ejecutar play -- LISTO
-                chess.move(from_row, from_col,to_row,to_col) 
+                self.chess.move(from_row, from_col,to_row,to_col) 
 
-                chess.change_pawn_for_other(from_row, from_col, to_row, to_col)
+                self.chess.change_pawn_for_other(from_row, from_col, to_row, to_col)
 
-                chess.__board__.show_board() 
-
-                # print("La pieza que quedo en la posicion es: ", chess.__board__.get_piece(from_row, from_col))
-
-                # print("La pieza que esta en la nueva posicion es: ", chess.__board__.get_piece(to_row, to_col))
-                
+                self.chess.__board__.show_board() 
             
-                print(chess.show_eaten_pieces())
+                print(self.chess.show_eaten_pieces())
+
+                if self.chess.verify_winner() != False:
+                    print(self.chess.verify_winner())
+                    a = "n"
+                    break
 
                 a = input("Do you want to continue? (y/n): ")
                 if a == "y":
-                    chess.change_turn()
-                    print("Es turno de: ", chess.__turn__)
+                    self.chess.change_turn()
+                    print("Es turno de: ", self.chess.__turn__)
+                    raise GameEnded("Game ended")
 
             except (NotPieceToMove, NotPermitedMove, InvalidPosition, NotPieceToReplace) as e:
                 print("Error:", e)
-                print("Try again", "It's still ", chess.__turn__, "turn")
+                print("Try again", "It's still ", self.chess.__turn__, "turn")
 
             except Exception as e:
                 print("error", e)
                 return "error"
-                
+            except GameEnded as e:
+                print("Game ended")
+            # return "end"
 
     def validate_range_to(self):
         try:
