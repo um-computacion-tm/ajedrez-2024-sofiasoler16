@@ -1,17 +1,14 @@
-from game.piece import Piece, Queen, King
+from game.piece import Piece
 from game.rook import Rook
 from game.pawn import Pawn
 from game.knight import Knight
 from game.bishop import Bishop
+from game.queen import Queen
+from game.king import King
 
-
+from game.exceptions import NotPermitedMove, NotPieceToMove
 
 #Que hacer con los permited_move, donde los pongo?
-class NotPermitedMove(Exception):
-    pass
-
-class NotPieceToMove(Exception):
-    pass
 
 
 
@@ -23,6 +20,11 @@ class Board:
             for _ in range(8):
                 col.append(None)
             self.__positions__.append(col)
+        # ESte es el mejor lugar para poner la funcion de comer piezas??????????????????????????????????
+        self.pieces_from_white = [] #Las piezas que se comio el NEGRO del BLANCO
+        self.pieces_from_black = [] #Las piezas que se comio el BLANCO del NEGRO
+        self.pieces_from_white_piece = [] #Las piezas que se comio el NEGRO del BLANCO
+        self.pieces_from_black_piece = [] #Las piezas que se comio el BLANCO del NEGRO
 
         #lugares rook
         self.__positions__[0][0] = Rook("BLACK") #"Rook Black"
@@ -57,18 +59,14 @@ class Board:
         self.__positions__[7][4] = King("WHITE") #"KingWhite"
     
 
-    #SI NO HAY PIEA DICE: TOO MANY VALUES TO UNPACK (EXPECTED 2) PERO NO ENTIENDO DONDE ESTAN ESOS VALORES QUE TRATA DE UNPACK
+
     def get_piece(self, row, col):
         piece = self.__positions__[row][col]
-        print("LA PIEZA ES " ,piece)
+        
         if piece is None:
-            print("LA PIEZA ES 1111 " ,piece)
             return "No piece"
         else:
-            print("LA PIEZA ES 2222 " ,piece)
             return ({piece.__type__}, {piece.__color__})
-        
-    
     
     def permited_move(self, from_row, from_col, to_row, to_col):
         piece = self.__positions__[from_row][from_col]
@@ -81,46 +79,55 @@ class Board:
     
     #Agregar que una pieza no se pueda mover a donde hay una pieza de su mismo color -- LISTO
     #Agregar que no permita mover una pieza del color que no es el turno -- LISTO
+    #Agregar que si una pieza evanta excepcion, vuelva a pedir fila y columna -- LISTO
+    #Implementar la funcion eat_piece -- LISTO
 
     def move_piece(self, from_row, from_col, to_row, to_col):
-        try:
-            piece = self.__positions__[from_row][from_col]
-            
-            if piece is None:
-                raise NotPieceToMove("No piece to move")
+        piece = self.__positions__[from_row][from_col]
+        if piece is None:
+            #self.show_board()
+            raise NotPieceToMove("No piece to move")
 
+        destination = self.__positions__[to_row][to_col]
 
-            destination = self.__positions__[to_row][to_col]
+        # Verificamos si la posición de destino tieneom_row, from_col,to_row,to_col)) una pieza del mismo color
+        if destination is not None and destination.__color__ == piece.__color__:
+            #self.show_board()
+            raise NotPermitedMove("Cannot move to a position occupied by a piece of the same color")
 
-            # Verificamos si la posición de destino tiene una pieza del mismo color
-            if destination is not None and destination.__color__ == piece.__color__:
-                self.show_board()
-                raise NotPermitedMove("Cannot move to a position occupied by a piece of the same color")
+        if self.permited_move(from_row, from_col, to_row, to_col) == False:
+            #self.show_board()
+            raise NotPermitedMove("The piece cannot be moved in this position")
 
-            if self.permited_move(from_row, from_col, to_row, to_col) == False:
-                self.show_board()
-                raise NotPermitedMove("The piece cannot be moved in this position")
+        self.__positions__[to_row][to_col] = piece
 
-            self.__positions__[to_row][to_col] = piece
+        self.__positions__[from_row][from_col] = None
 
-            self.__positions__[from_row][from_col] = None
+        print(f"Moved piece from: ", {from_row}, {from_col}, "to: ", {to_row}, {to_col})
 
-            print(f"Moved piece from: ", {from_row}, {from_col}, "to: ", {to_row}, {to_col})
-
-            self.show_board()
-
-    #Hacer que cuando se equivoca en el turno, se le vuelva a pedir repetir el turno
-
-        except NotPieceToMove as e:
-            print("Error:", e)
-            return str(e)
-        except NotPermitedMove as e:
-            print("Error:", e)
-            return str(e)
-        except Exception as e:
-            print("Error:", e)
-            return "Error"
+        #self.show_board()
     
+    def eat_piece(self, from_row, from_col, to_row, to_col):
+
+        piece = self.__positions__[from_row][from_col]
+        destination = self.__positions__[to_row][to_col]
+        if destination is not None:
+            if destination.__color__ != piece.__color__:
+                if piece.__color__ == "WHITE":
+                    self.pieces_from_black.append(destination.show())
+                    self.pieces_from_black_piece.append(destination)
+                    print("Las piezas que BLANCO se comio de NEGRO son: ")
+                    return (self.pieces_from_black)
+                else:
+                    self.pieces_from_white.append(destination.show())
+                    self.pieces_from_white_piece.append(destination)
+                    print("Las piezas que NEGRO se comio de BLANCO son: ")
+                    return (self.pieces_from_white)
+        else:
+            return False
+
+
+
     def show_board(self):
 
         print("    ", end="")
@@ -136,10 +143,10 @@ class Board:
                 if piece is None:
                     print("    ", end=" |")  # Espacio en blanco si no hay pieza
                 else:
-                    # print(f" {piece.__type__[0]}{piece.__color__[0]} ", end=" |")  # Muestra inicial del tipo y color de la pieza
                     print(" ", piece.show()," ",  end="|")  # Muestra inicial del tipo y color de la pieza
             print()
             print("    " + "------" * 8 + "")  # Línea separadora entre filas
+
 
 
 board = Board()

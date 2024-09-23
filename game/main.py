@@ -1,64 +1,113 @@
 from game.chess import Chess
-from game.board import Board
 from game.piece import Piece
 
-class InvalidPosition(Exception):
-    pass
+from game.exceptions import InvalidPosition, NotPieceToMove, NotPermitedMove, NotPieceToReplace, GameEnded
 
 class Cli():
+    def __init__(self):
+        self.chess = Chess()
+
     def main(self):
         self.play()
 
     def verify_move(self, chess): #Verifica el color del movimeinto
-        while True:
-            from_row = int(input("From row: "))
-            from_col = int(input("From col: "))
-            print("The piece you have chosen is: ", chess.__board__.get_piece(from_row, from_col))
-            
-            # Intentamos mover la pieza si es del color correcto
-            move_by_color = chess.move_correct_color(from_row, from_col)
-            if move_by_color is None:  # Si no hay error, se seleccionó la pieza correcta
-                return from_row, from_col
-            else:
-                print(move_by_color)  # Si hay un error, se vuelve a pedir la pieza
 
+        while True:
+            try:
+                from_row = int(input("From row: "))
+                from_col = int(input("From col: "))
+              
+                if not (0 <= from_row <= 7) or not (0 <= from_col <= 7):
+                    raise InvalidPosition("Invalid position. Please enter a value between 0 and 7.")
+
+                print("The piece you have chosen is: ", chess.__board__.get_piece(from_row, from_col))
+            
+                # Verificamos el color de la pieza usando la nueva función
+                if self.verify_color(chess, from_row, from_col):
+                    return from_row, from_col  # Si la verificación es exitosa, retornamos las coordenadas
+    
+
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+            except InvalidPosition as e:
+                print(e)
+
+    def verify_color(self, chess, from_row, from_col):
+        move_by_color = chess.move_correct_color(from_row, from_col)
+        
+        if move_by_color is None:  # Si no hay error, se seleccionó la pieza correcta
+            return True  # Verificación exitosa
+        elif move_by_color == "You can't move a piece that doesn't exist":
+            print("You can't move a piece that doesn't exist")
+        else:
+            print(move_by_color)
+        
+        return False  # Verificación fallida
 
 
     def play(self):
-        chess = Chess() 
+        # chess = Chess()
         #board = Board() #No se usa porque si creo un board aca esoy inhiendo al otro board, estoy como creando un board nuevo que no le he movido ninguna pieza
         a = "y"
-        try:
-            while a == "y":
-                
-                from_row, from_col = self.verify_move(chess)
+        
+        while a == "y":
+            self.chess.__board__.show_board() 
+            try:
 
-                to_row = int(input("To row: "))
-                to_col = int(input("To col: "))
-                # while True:
-                #         # Intentamos mover la pieza
-                #     move_error = chess.move(from_row, from_col, to_row, to_col)
-                    
-                #     if move_error is None:
-                #         break  # Si no hubo errores, rompemos el bucle y cambiamos de turno
-                #     else:
-                #         print(move_error)  # Si hubo un error, se muestra y se vuelve a pedir la entrada
+                from_row, from_col = self.verify_move(self.chess)
 
+                to_row, to_col = self.validate_range_to()
 
-                chess.move(from_row, from_col,to_row,to_col)
-                print("La pieza que quedo en la posicion es: ", chess.__board__.get_piece(from_row, from_col))
+                print(self.chess.__board__.eat_piece(from_row, from_col, to_row, to_col))
+                # Quiero hacer que si move levanta excepcion, vuelva a ejecutar play -- LISTO
+                self.chess.move(from_row, from_col,to_row,to_col) 
 
-                print("La pieza que esta en la nueva posicion es: ", chess.__board__.get_piece(to_row, to_col))
-                
+                self.chess.change_pawn_for_other(from_row, from_col, to_row, to_col)
+
+                self.chess.__board__.show_board() 
+            
+                print(self.chess.show_eaten_pieces())
+
+                if self.chess.verify_winner() != False:
+                    print(self.chess.verify_winner())
+                    a = "n"
+                    break
+
                 a = input("Do you want to continue? (y/n): ")
                 if a == "y":
-                    chess.change_turn()
-                    print("Es turno de: ", chess.__turn__)
+                    self.chess.change_turn()
+                    print("Es turno de: ", self.chess.__turn__)
+                    raise GameEnded("Game ended")
 
-        except Exception as e:
-            print("error", e)
-            return "error"
-                
+            except (NotPieceToMove, NotPermitedMove, InvalidPosition, NotPieceToReplace) as e:
+                print("Error:", e)
+                print("Try again", "It's still ", self.chess.__turn__, "turn")
+
+            except Exception as e:
+                print("error", e)
+                return "error"
+            except GameEnded as e:
+                print("Game ended")
+            # return "end"
+
+    def validate_range_to(self):
+        try:
+            while True:
+                to_row = int(input("To row: "))
+                to_col = int(input("To col: "))
+
+                # Validar que los valores estén dentro de los límites del tablero
+                if not (0 <= to_row <= 7) or not (0 <= to_col <= 7):
+                    raise InvalidPosition("Invalid position. Please enter a value between 0 and 7.")
+                break 
+
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+        except InvalidPosition as e:
+            print(e)
+
+        return to_row, to_col
+
 if __name__ == "__main__":
     cli = Cli()
     cli.play()
