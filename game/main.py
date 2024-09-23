@@ -17,8 +17,7 @@ class Cli():
                 from_row = int(input("From row: "))
                 from_col = int(input("From col: "))
               
-                if not (0 <= from_row <= 7) or not (0 <= from_col <= 7):
-                    raise InvalidPosition("Invalid position. Please enter a value between 0 and 7.")
+                self.chess.error_out_of_range(from_row, from_col)
 
                 print("The piece you have chosen is: ", chess.__board__.get_piece(from_row, from_col))
             
@@ -77,6 +76,7 @@ class Cli():
                 if a == "y":
                     self.chess.change_turn()
                     print("Es turno de: ", self.chess.__turn__)
+                else:
                     raise GameEnded("Game ended")
 
             except (NotPieceToMove, NotPermitedMove, InvalidPosition, NotPieceToReplace) as e:
@@ -87,26 +87,26 @@ class Cli():
                 print("error", e)
                 return "error"
             except GameEnded as e:
-                print("Game ended")
+                print("Game ended. Noone wins")
             # return "end"
 
     def validate_range_to(self):
-        try:
-            while True:
+
+        while True:
+            try:
                 to_row = int(input("To row: "))
                 to_col = int(input("To col: "))
 
-                # Validar que los valores estén dentro de los límites del tablero
-                if not (0 <= to_row <= 7) or not (0 <= to_col <= 7):
-                    raise InvalidPosition("Invalid position. Please enter a value between 0 and 7.")
-                break 
+                self.chess.error_out_of_range(to_row, to_col)
 
-        except ValueError:
-            print("Invalid input. Please enter a number.")
-        except InvalidPosition as e:
-            print(e)
+                return to_row, to_col
 
-        return to_row, to_col
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+            except InvalidPosition as e:
+                print(e)
+
+
 
 if __name__ == "__main__":
     cli = Cli()

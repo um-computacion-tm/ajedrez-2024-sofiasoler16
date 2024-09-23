@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Tercer Sprint----------------
+
+## [0.39] - 23-9-24
+Fixed error with number out of range in to_row to_col, and added error_out_of_range function to avoid repetition
+
+## [0.38] - 22-9-24
+Added Draw game
+
 ## [0.37] - 22-9-24
 Added function verify_winner to chess
 
