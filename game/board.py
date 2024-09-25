@@ -59,14 +59,21 @@ class Board:
         self.__positions__[7][4] = King("WHITE") #"KingWhite"
     
 
-
-    def get_piece(self, row, col):
+    def get_piece_for_show(self, row, col):
         piece = self.__positions__[row][col]
         
         if piece is None:
             return "No piece"
         else:
             return ({piece.__type__}, {piece.__color__})
+        
+    def get_piece(self, row, col):
+        piece = self.__positions__[row][col]
+
+        if piece is None:
+            return "No piece"
+        else:
+            return piece
     
     def permited_move(self, from_row, from_col, to_row, to_col):
         piece = self.__positions__[from_row][from_col]

@@ -19,7 +19,7 @@ class Cli():
               
                 self.chess.error_out_of_range(from_row, from_col)
 
-                print("The piece you have chosen is: ", chess.__board__.get_piece(from_row, from_col))
+                print("The piece you have chosen is: ", chess.__board__.get_piece_for_show(from_row, from_col))
             
                 # Verificamos el color de la pieza usando la nueva función
                 if self.verify_color(chess, from_row, from_col):
@@ -86,12 +86,11 @@ class Cli():
             except Exception as e:
                 print("error", e)
                 return "error"
-            except GameEnded as e:
+            except GameEnded:
                 print("Game ended. Noone wins")
             # return "end"
 
     def validate_range_to(self):
-
         while True:
             try:
                 to_row = int(input("To row: "))

@@ -30,13 +30,13 @@ class Chess:
         if piece == "No piece":
             return "You can't move a piece that doesn't exist"
             
-        # Desempacamos la tupla en tipo de pieza y color
-        piece_type, piece_color = piece
+        # # Desempacamos la tupla en tipo de pieza y color
+        # piece_type, piece_color = piece
         
-        # Convertimos el conjunto del color a una lista y accedemos al primer elemento
-        color = list(piece_color)[0]
+        # # Convertimos el conjunto del color a una lista y accedemos al primer elemento
+        # color = list(piece_color)[0]
 
-        if color == self.__turn__:
+        if piece.__color__ == self.__turn__:
             True
         else:
             #print("You can't move a piece that is not your color, your color is: ", self.__turn__, "You are trying to move: ", color)
@@ -71,32 +71,27 @@ class Chess:
         destination = self.__board__.get_piece(to_row, to_col)  # Obtener la pieza en la posición final
         
         # Verificar si el peón es blanco y ha llegado a la fila 0
-        if "PAWN" in destination[0] and "WHITE" in destination[1] and to_row == 0:
-            if self.__board__.pieces_from_black_piece:  # Verificar si hay piezas disponibles
-                self.define_new_piece_white(from_row, from_col, to_row, to_col)
-            else:
-                raise NotPieceToReplace("No pieces have been eaten from WHITE")
+        if destination.__type__ == "PAWN" and destination.__color__ == "WHITE" and to_row == 0:
+            pieces_from_piece = self.__board__.pieces_from_white_piece
+        elif destination.__type__ == "PAWN" and destination.__color__ == "BLACK" and to_row == 7:
+            pieces_from_piece = self.__board__.pieces_from_black_piece
+        else:
+            return
+    
+        if pieces_from_piece:  # Verificar si hay piezas disponibles
+            self.define_new_piece(from_row, from_col, to_row, to_col, pieces_from_piece)
+        else:
+            raise NotPieceToReplace("No pieces have been eaten from " + destination[0])
         
         # Verificar si el peón es negro y ha llegado a la fila 7
-        elif "PAWN" in destination[0] and "BLACK" in destination[1] and to_row == 7:
-            if self.__board__.pieces_from_white_piece:  # Verificar si hay piezas disponibles
-                self.define_new_piece_black(from_row, from_col, to_row, to_col)
-            else:
-                raise NotPieceToReplace("No pieces have been eaten from BLACK")
 
-    def define_new_piece_white(self, from_row, from_col, to_row, to_col):
-                print("Las piezas a elegir son: ", self.__board__.pieces_from_white)
+    def define_new_piece(self, from_row, from_col, to_row, to_col, pieces_from_piece):
+                print("Las piezas a elegir son: ", pieces_from_piece)
                 index = int(input("Enter the NUMBER of position in the list of piece you want to change: "))
-                new_piece =self.__board__.pieces_from_white_piece[index]
+                new_piece =pieces_from_piece[index]
                 self.__board__.__positions__[to_row][to_col] = new_piece
                 print("Pieza definida en la posicion es : ", new_piece.show())
+                
                 return new_piece
     
-    def define_new_piece_black(self, from_row, from_col, to_row, to_col):
-                print("Las piezas a elegir son: ", self.__board__.pieces_from_black)
-                index = int(input("Enter the NUMBER of position in the list of piece you want to change: "))
-                new_piece =self.__board__.pieces_from_black_piece[index]
-                self.__board__.__positions__[to_row][to_col] = new_piece
-                print("Pieza definida en la posicion es : ", new_piece.show())
 
-                return new_piece

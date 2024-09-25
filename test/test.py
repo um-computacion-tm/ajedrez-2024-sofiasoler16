@@ -35,7 +35,7 @@ class TestChess(unittest.TestCase):
     @patch('builtins.print')
     def test_move_piece(self, patched_print):
 
-        self.assertEqual(self.chess.__board__.get_piece(7, 0), ({'ROOK'}, {'WHITE'}))
+        self.assertEqual(self.chess.__board__.get_piece_for_show(7, 0), ({'ROOK'}, {'WHITE'}))
 
         self.chess.move(7, 0, 5, 0)
 
@@ -68,7 +68,7 @@ class TestChess(unittest.TestCase):
 
         self.chess.__board__.__positions__[7][0] = Pawn("BLACK")
 
-        function = self.chess.define_new_piece_black(6, 0, 7, 0)
+        function = self.chess.define_new_piece(6, 0, 7, 0, self.chess.__board__.pieces_from_black_piece)
 
 
         self.assertEqual(self.chess.__board__.__positions__[7][0].__type__, "QUEEN")
@@ -83,7 +83,7 @@ class TestChess(unittest.TestCase):
 
         self.chess.__board__.__positions__[7][0] = Pawn("WHITE")
 
-        function = self.chess.define_new_piece_white(6, 0, 7, 0)
+        function = self.chess.define_new_piece(6, 0, 7, 0, self.chess.__board__.pieces_from_white_piece)
 
 
         self.assertEqual(self.chess.__board__.__positions__[7][0].__type__, "QUEEN")
@@ -105,11 +105,12 @@ class TestChess(unittest.TestCase):
 
         self.chess.move(1, 7, 0, 7)
 
-        self.assertEqual(self.chess.__board__.get_piece(0, 7), ({'PAWN'}, {'WHITE'}))
+        self.assertEqual(self.chess.__board__.get_piece_for_show(0, 7), ({'PAWN'}, {'WHITE'}))
+        self.assertIsInstance(self.chess.__board__.get_piece(0, 7), Pawn)
 
         self.chess.change_pawn_for_other(1, 7, 0, 7)
 
-        self.assertEqual(self.chess.__board__.get_piece(0, 7), ({'QUEEN'}, {'WHITE'}))
+        self.assertEqual(self.chess.__board__.get_piece_for_show(0, 7), ({'QUEEN'}, {'WHITE'}))
         
 
     def test_verify_winner(self):
@@ -138,7 +139,7 @@ class TestBoard(unittest.TestCase):
     @patch('builtins.print')
     def test_move_piece(self, patched_print):
 
-        self.assertEqual(self.board.get_piece(0, 0), ({'ROOK'}, {'BLACK'}))
+        self.assertEqual(self.board.get_piece_for_show(0, 0), ({'ROOK'}, {'BLACK'}))
 
         self.board.move_piece(0, 0, 4, 0)
 
@@ -286,7 +287,9 @@ class TestPiece(unittest.TestCase):
         self.board.__positions__[2][2] = Knight("BLACK")
         self.assertEqual(self.board.__positions__[2][2].__type__, "KNIGHT")
 
-        self.assertEqual(self.board.get_piece(2, 2), ({'KNIGHT'}, {'BLACK'}))
+        self.assertEqual(self.board.get_piece_for_show(2, 2), ({'KNIGHT'}, {'BLACK'}))
+        self.assertIsInstance(self.board.get_piece(2, 2), Knight)
+
         self.assertEqual(self.board.permited_move(2, 2, 4, 3), True)
 
     def test_permited_move_queen(self):
@@ -419,7 +422,9 @@ class TestMain(unittest.TestCase):
         # Asegurarse de que `self.cli` use el mismo tablero que acabamos de modificar
         self.cli.chess = self.chess
 
-        self.assertEqual(self.chess.__board__.get_piece(5, 5), ({'QUEEN'}, {'BLACK'}))
+        self.assertEqual(self.chess.__board__.get_piece_for_show(5, 5), ({'QUEEN'}, {'BLACK'}))
+
+        self.assertIsInstance(self.chess.__board__.get_piece(5, 5), Queen)
 
         self.assertIsNone(self.cli.play())
 

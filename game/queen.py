@@ -1,9 +1,7 @@
 from game.piece import Piece
 
 class Queen(Piece):
-    def __init__(self, color):
-        super().__init__(color)
-        self.__type__ = "QUEEN"
+    __type__ = "QUEEN"
 
     def permited_move(self, from_row, from_col, to_row, to_col, board):
         

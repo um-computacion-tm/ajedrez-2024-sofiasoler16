@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Tercer Sprint----------------
+## [0.40] - 24-9-24
+Added function get_piece_for_show to board and fixed function define_new_piece
 
 ## [0.39] - 23-9-24
 Fixed error with number out of range in to_row to_col, and added error_out_of_range function to avoid repetition
