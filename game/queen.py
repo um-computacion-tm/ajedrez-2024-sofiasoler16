@@ -2,6 +2,8 @@ from game.piece import Piece
 
 class Queen(Piece):
     __type__ = "QUEEN"
+    __white_show__ = "♛"
+    __black_show__ = "♕"
 
     def permited_move(self, from_row, from_col, to_row, to_col, board):
         
@@ -13,9 +15,3 @@ class Queen(Piece):
             return True
         else:
             return False
-        
-    def show(self):
-        if self.__color__ == "WHITE":
-            return "♛"
-        else:
-            return "♕"

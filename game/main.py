@@ -17,7 +17,7 @@ class Cli():
                 from_row = int(input("From row: "))
                 from_col = int(input("From col: "))
               
-                self.chess.error_out_of_range(from_row, from_col)
+                self.chess.verify_out_of_range(from_row, from_col)
 
                 print("The piece you have chosen is: ", chess.__board__.get_piece_for_show(from_row, from_col))
             
@@ -96,7 +96,7 @@ class Cli():
                 to_row = int(input("To row: "))
                 to_col = int(input("To col: "))
 
-                self.chess.error_out_of_range(to_row, to_col)
+                self.chess.verify_out_of_range(to_row, to_col)
 
                 return to_row, to_col
 

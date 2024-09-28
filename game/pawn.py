@@ -2,6 +2,8 @@ from game.piece import Piece
 
 class Pawn(Piece):
     __type__ = "PAWN"
+    __white_show__ = "♟" 
+    __black_show__ = "♙"
 
     def is_double_step(self, from_row, to_row, direction):
         return (to_row - from_row) == 2 * direction
@@ -32,9 +34,3 @@ class Pawn(Piece):
                 return True        
 
         return False
-    
-    def show(self):
-        if self.__color__ == "WHITE":
-            return "♟"
-        else:
-            return "♙"

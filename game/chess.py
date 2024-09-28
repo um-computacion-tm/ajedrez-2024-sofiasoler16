@@ -13,12 +13,12 @@ class Chess:
 
         piece = self.__board__.get_piece(from_row, from_col)
 
-        self.error_out_of_range(to_row, to_col)
+        self.verify_out_of_range(to_row, to_col)
 
         return ("Esto devuelve move: ", self.__board__.move_piece(from_row, from_col, to_row, to_col))
         
 
-    def error_out_of_range(self, row, col):
+    def verify_out_of_range(self, row, col):
         # Validar que los valores estén dentro de los límites del tablero
         if not (0 <= row <= 7) or not (0 <= col <= 7):
             raise InvalidPosition("Invalid position. Please enter a value between 0 and 7.")
