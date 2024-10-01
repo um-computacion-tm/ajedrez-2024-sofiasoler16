@@ -112,6 +112,28 @@ class TestChess(unittest.TestCase):
 
         self.assertEqual(self.chess.__board__.get_piece_for_show(0, 7), ({'QUEEN'}, {'WHITE'}))
         
+    @patch('builtins.print')
+    @patch('builtins.input', side_effect = ["1"])
+    def test_replace_piece_black(self, patched_print, mock_input):
+        self.chess.__board__.__positions__[0][7] = None
+
+        self.chess.__board__.__positions__[1][7] = Pawn("WHITE")
+
+        self.chess.__board__.pieces_from_black_piece = [Rook("BLACK"), Queen("BLACK")]
+        self.chess.__board__.pieces_from_black = ["♖", "♕"]
+
+        self.chess.__board__.pieces_from_white_piece = [Rook("WHITE"), Queen("WHITE")]
+        self.chess.__board__.pieces_from_white = ["♜", "♛"]
+
+        self.chess.move(1, 7, 0, 7)
+
+        self.assertEqual(self.chess.__board__.get_piece_for_show(0, 7), ({'PAWN'}, {'WHITE'}))
+        self.assertIsInstance(self.chess.__board__.get_piece(0, 7), Pawn)
+
+        self.chess.change_pawn_for_other(1, 7, 0, 7)
+
+        self.assertEqual(self.chess.__board__.get_piece_for_show(0, 7), ({'QUEEN'}, {'WHITE'}))
+        
 
     def test_verify_winner(self):
         self.chess.__board__.pieces_from_black_piece = [Rook("BLACK"), Rook("BLACK"), Knight("BLACK"), Knight("BLACK"), 
@@ -379,30 +401,40 @@ class TestMain(unittest.TestCase):
         self.assertEqual(self.cli.verify_color(self.chess, 5, 5), False)
         
 
-    @patch('builtins.print', side_effect= [9,9])
-    def verify_move_invalid_position(self, patched_print):
+    # #Como testeo que levante invalidposition 1 vez si lo tengo en bucle
+    # @patch('builtins.print', side_effect= [9, 9])
+    # def test_verify_move_invalid_position(self, patched_print):
 
-        with self.assertRaises(InvalidPosition) as exc:
-            self.cli.verify_move(self.chess)
-
-    # @patch('builtins.print')
-    # def test_verify_winner(self, patched_print):
-    #     self.chess.__board__.pieces_from_black_piece = [Rook("BLACK"), Rook("BLACK"), Knight("BLACK"), Knight("BLACK"), 
-    #                                                     Bishop("BLACK"), Bishop("BLACK"), Queen("BLACK"), King("BLACK"), 
-    #                                                     Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), 
-    #                                                     Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK")]
+    #     with self.assertRaises(InvalidPosition) as exc:
+    #         self.cli.verify_move(self.chess)
 
 
-    #     self.assertEqual(self.cli.play(), "WHITE WINS")
+    #Como testeo que se termine el juego cuando ya no hay piezas de un color
+    @patch('builtins.print')
+    @patch('builtins.input', side_effect= ["6", "6", "4", "6"])
+    def test_verify_winner(self, mock_input, patched_print):
+        self.cli.chess.__board__.pieces_from_black_piece = [Rook("BLACK"), Rook("BLACK"), Knight("BLACK"), Knight("BLACK"), 
+                                                        Bishop("BLACK"), Bishop("BLACK"), Queen("BLACK"), King("BLACK"), 
+                                                        Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), 
+                                                        Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK"), Pawn("BLACK")]
 
-    # def test_verify_end_game_called(self):
+        self.cli.play()
 
-    #     self.chess.__board__.__positions__[5][5] = Queen("BLACK") #"RookBlack"
-    #     for col in range(8):
-    #         self.chess.__board__.__positions__[1][col] = None #"PawnBlack"
-    #         self.chess.__board__.__positions__[0][col] = None 
-    #     print(self.chess.__board__.get_piece(5, 5))
-    #     self.cli.play()
+        patched_print.assert_any_call(
+            "WHITE WINS",
+            )
+        patched_print.assert_any_call(
+            "Game ended",
+            )
+
+    def test_verify_end_game_called(self):
+
+        self.chess.__board__.__positions__[5][5] = Queen("BLACK") #"RookBlack"
+        for col in range(8):
+            self.chess.__board__.__positions__[1][col] = None #"PawnBlack"
+            self.chess.__board__.__positions__[0][col] = None 
+        print(self.chess.__board__.get_piece(5, 5))
+        self.cli.play()
 
     @patch('builtins.print')
     @patch ('builtins.input', side_effect = [6,6,4,6])
@@ -427,6 +459,13 @@ class TestMain(unittest.TestCase):
         self.assertIsInstance(self.chess.__board__.get_piece(5, 5), Queen)
 
         self.assertIsNone(self.cli.play())
+
+    @patch('builtins.print')
+    @patch('builtins.input', side_effect = [6, 6, 4, 6, "y"])
+    def test_answer_yes(self, patched_print, mock_input):
+        self.cli.play()
+
+        self.assertEqual(self.cli.chess.__turn__, "BLACK")
 
 
 if __name__ == '__main__':

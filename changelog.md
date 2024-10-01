@@ -7,7 +7,10 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 #--------------Cuarto Sprint----------------
-## [0.50] - 28-9-24
+## [0.41] - 1-10-24
+Fixed error with verify_winner
+
+## [0.40] - 28-9-24
 Optimized function show piece and added show to class pieces
 
 #--------------Tercer Sprint----------------

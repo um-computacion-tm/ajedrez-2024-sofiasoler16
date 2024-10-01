@@ -52,7 +52,6 @@ class Cli():
         while a == "y":
             self.chess.__board__.show_board() 
             try:
-
                 from_row, from_col = self.verify_move(self.chess)
 
                 to_row, to_col = self.validate_range_to()
@@ -67,17 +66,14 @@ class Cli():
             
                 print(self.chess.show_eaten_pieces())
 
-                if self.chess.verify_winner() != False:
+                if self.chess.verify_winner() is not False:
                     print(self.chess.verify_winner())
                     a = "n"
                     break
-
                 a = input("Do you want to continue? (y/n): ")
                 if a == "y":
                     self.chess.change_turn()
                     print("Es turno de: ", self.chess.__turn__)
-                else:
-                    raise GameEnded("Game ended")
 
             except (NotPieceToMove, NotPermitedMove, InvalidPosition, NotPieceToReplace) as e:
                 print("Error:", e)
@@ -86,9 +82,9 @@ class Cli():
             except Exception as e:
                 print("error", e)
                 return "error"
-            except GameEnded:
-                print("Game ended. Noone wins")
-            # return "end"
+            
+        print("Game ended")
+
 
     def validate_range_to(self):
         while True:
