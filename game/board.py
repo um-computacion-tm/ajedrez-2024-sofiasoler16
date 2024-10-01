@@ -59,14 +59,21 @@ class Board:
         self.__positions__[7][4] = King("WHITE") #"KingWhite"
     
 
-
-    def get_piece(self, row, col):
+    def get_piece_for_show(self, row, col):
         piece = self.__positions__[row][col]
         
         if piece is None:
             return "No piece"
         else:
             return ({piece.__type__}, {piece.__color__})
+        
+    def get_piece(self, row, col):
+        piece = self.__positions__[row][col]
+
+        if piece is None:
+            return "No piece"
+        else:
+            return piece
     
     def permited_move(self, from_row, from_col, to_row, to_col):
         piece = self.__positions__[from_row][from_col]
@@ -75,12 +82,6 @@ class Board:
         if piece is None:
             return False  # No hay pieza para mover
         return piece.permited_move(from_row, from_col, to_row, to_col, self)
-    
-    
-    #Agregar que una pieza no se pueda mover a donde hay una pieza de su mismo color -- LISTO
-    #Agregar que no permita mover una pieza del color que no es el turno -- LISTO
-    #Agregar que si una pieza evanta excepcion, vuelva a pedir fila y columna -- LISTO
-    #Implementar la funcion eat_piece -- LISTO
 
     def move_piece(self, from_row, from_col, to_row, to_col):
         piece = self.__positions__[from_row][from_col]

@@ -6,7 +6,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
+#--------------Cuarto Sprint----------------
+## [0.41] - 1-10-24
+Fixed error with verify_winner
+
+## [0.40] - 28-9-24
+Optimized function show piece and added show to class pieces
+
 #--------------Tercer Sprint----------------
+## [0.399] - 24-9-24
+Added function get_piece_for_show to board and fixed function define_new_piece
 
 ## [0.39] - 23-9-24
 Fixed error with number out of range in to_row to_col, and added error_out_of_range function to avoid repetition

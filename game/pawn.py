@@ -1,9 +1,9 @@
 from game.piece import Piece
 
 class Pawn(Piece):
-    def __init__(self, color):
-        super().__init__(color)
-        self.__type__ = "PAWN"
+    __type__ = "PAWN"
+    __white_show__ = "♟" 
+    __black_show__ = "♙"
 
     def is_double_step(self, from_row, to_row, direction):
         return (to_row - from_row) == 2 * direction
@@ -17,7 +17,7 @@ class Pawn(Piece):
 
     def is_enemy_piece(self, board, to_row, to_col):
         destination_piece = board.get_piece(to_row, to_col)
-        return destination_piece != "No piece" and destination_piece[1] != self.__color__
+        return destination_piece != "No piece" and destination_piece.__color__ != self.__color__
 
 
     def permited_move(self, from_row, from_col, to_row, to_col, board):
@@ -34,9 +34,3 @@ class Pawn(Piece):
                 return True        
 
         return False
-    
-    def show(self):
-        if self.__color__ == "WHITE":
-            return "♟"
-        else:
-            return "♙"

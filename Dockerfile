@@ -7,7 +7,7 @@ WORKDIR /ajedrez-2024-sofiasoler16
 
 RUN pip install -r requirements.txt
 
-CMD ["sh", "-c", "coverage run -m unittest && coverage report -m && python main.py"]
+CMD ["sh", "-c", "coverage run -m unittest && coverage report -m && python -m game.main"]
 
-# docker buildx built -t ajedrez-2024-sofiasoler16 .
+# docker buildx build -t ajedrez-2024-sofiasoler16 .
 # docker run -i ajedrez-2024-sofiasoler16

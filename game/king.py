@@ -4,9 +4,9 @@ from game.piece import Piece
 
         
 class King(Piece):
-    def __init__(self, color):
-        super().__init__(color)
-        self.__type__ = "KING"
+    __type__ = "KING"
+    __white_show__ = "♚"
+    __black_show__ = "♔"
 
     def permited_move(self, from_row, from_col, to_row, to_col, board):
         if abs(from_row - to_row) <= 1 and abs(from_col - to_col) <= 1 and not (from_row == to_row and from_col == to_col):
@@ -14,8 +14,3 @@ class King(Piece):
         else: 
             return False
         
-    def show(self):
-        if self.__color__ == "WHITE":
-            return "♚"
-        else:
-            return "♔"
