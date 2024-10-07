@@ -6,12 +6,8 @@ class Chess:
         self.__board__ = Board()
         self.__turn__ = "WHITE"
 
-# Falta hacer que si ingresa valor out of range, al ejecutar move, se vuelva a producir el bucle y no frene -- LISTO
-# Preguntar por docker
 
     def move(self,from_row, from_col, to_row, to_col):
-
-        piece = self.__board__.get_piece(from_row, from_col)
 
         self.verify_out_of_range(to_row, to_col)
 
@@ -30,12 +26,6 @@ class Chess:
         if piece == "No piece":
             return "You can't move a piece that doesn't exist"
             
-        # # Desempacamos la tupla en tipo de pieza y color
-        # piece_type, piece_color = piece
-        
-        # # Convertimos el conjunto del color a una lista y accedemos al primer elemento
-        # color = list(piece_color)[0]
-
         if piece.__color__ == self.__turn__:
             True
         else:
